@@ -8,11 +8,11 @@
 - Sergey 
   - Scouting App.. im trying ok?
 - Lucke<sup>2</sup>
-  - Nothing?
+  - Learning?
 - Yaroslav 
-  - Nothing?
+  - Learning?
 - Mike 
-  - Nothing?
+  - Learning?
 
 ## To Do's
 - Swerve Drive from Scratch!
