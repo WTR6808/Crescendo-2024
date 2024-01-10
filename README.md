@@ -3,7 +3,7 @@
 ## Assigned Projects
 - Molly
   - PF + A little of _everything_
-- Mitch + David
+- *Mitch* + *David*
   - SFS
 - Sergey 
   - Scouting App.. im trying ok?
@@ -21,3 +21,6 @@
   - Sysid
 - Reprogram Tank Drive Mechanum 
 
+## Bot Notes
+- `FR, BR` drive motors are `not inverted`
+- `FL, BL` drive motors are `inverted`
