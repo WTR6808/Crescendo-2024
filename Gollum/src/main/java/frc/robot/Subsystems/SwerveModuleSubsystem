@@ -1,0 +1,70 @@
+package com.robot.subsystems;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.spiilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.SubsytemBase;
+import frc.robot.Constants;
+import frc.robot.Sensors.PigeonTwo;
+
+public class SwerveModuleSubsystem extends SubsytemBase {
+    private final MK4_L3_SwerveModule m_frontLeft = 
+        new MK4_L3_SwerveModule("Left Front",
+                                Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_CANID,
+                                Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_INVERTED,
+                                Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID,
+                                Constants.SwerveDriveConstants.FRONT_LEFT_TURN_INVERTED);
+
+
+    private final MK4_L3_SwerveModule m_frontRight = 
+        new MK4_L3_SwerveModule("Right Front",
+                                Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_CANID,
+                                Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_INVERTED,
+                                Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID,
+                                Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_INVERTED);
+
+    private final MK4_L3_SwerveModule m_backLeft = 
+        new MK4_L3_SwerveModule("Left Back",
+                                Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_CANID,
+                                Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_INVERTED,
+                                Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
+                                Constants.SwerveDriveConstants.BACK_LEFT_TURN_INVERTED);
+    
+    private final MK4_L3_SwerveModule m_backRight = 
+        new MK4_L3_SwerveModule("Right Back",
+                                Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_CANID,
+                                Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_INVERTED,
+                                Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID,
+                                Constants.SwerveDriveConstants.BACK_RIGHT_TURN_INVERTED);
+
+    //Create CTRE Pigion 2 Gyroscope
+    PigeonTwo m_pigeon = PigeonTwo.getInstance();
+
+    // Creates a new SwerveDriveSubsystem
+    public SwerveDriveSubsystem() {}
+    
+    //Method to drive the robot using joystick info
+    public void drive(double x, double y, double rot, boolean fieldRelative) {
+        ChassisSpeeds speeds;
+        if (fieldRelative) {
+            //TODO Should this be getAngle or get360Angle?
+            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, rot, m_pigeon.getAngle());
+        }
+        else {
+            speeds = new ChassisSpeeds(x, y, rot);
+        }
+        var swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveDriveModuelStates(ChassisSpeeds.discretize(speeds, TimedRobot.kDefaultPeriod));
+        
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuelStates,
+                                                    Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY);
+        
+        m_frontLeft.setDesiredState (SwerveDriveStates[0]);
+        m_frontRight.setDesiredState(SwerveDriveStates[1]);
+        m_backLeft.setDesiredState  (SwerveDriveStates[2]);
+        m_backRight.setDesiredState (SwerveDriveStates[3]);
+    }
+    
+    @Override
+    public void periodic() {
+        // Called once per scheduler run
+    }

@@ -1,0 +1,117 @@
+package frc.robot.subsystems;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CanSparkBase.IdleMode;
+import com.revrobotics.CanSparkLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuelPosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj2.command.SubsytemBase;
+import frc.robot.Constants;
+
+public class MK4_L3_SwerveModule extends SubsystemBase {
+    //Create Class Wide Fields/Objects for Motors/Encoders
+    private final String          m_ModuleName;
+    private final CANSparkMax     m_driveMotor;
+    private final RelativeEncoder m_driveEncoder;
+    private final CANSparkMax     m_turnMotor;
+    private final RelativeEncoder m_turnEncoder;
+
+    //FIXME Change to onboard SPARKMax PID controller?
+    private final PIDController m_drivePID = 
+        new PIDController(Constants.SDSModuleConstants.DRIVE_P,
+                          Constants.SDSModuleConstants.DRIVE_I,
+                          Constants.SDSModuleConstants.DRIVE_D);
+    
+    //FIXME Change to Profiled PID Controller
+    private final PIDController m_turnPID = 
+        new PIDController(Cosntants.SDSModuleConstants.TURN_P,
+                          Constants.SDSModuleConstants.TURN_I,
+                          Constants.SDSModuleConstants.TURN_D);
+
+    // Creates a new MK4_M3_SwerveModule, aka Constructor
+    public MK4_L3_SwerveModule(String  name,
+                               int     driveMotorCAN,
+                               boolean driveInverted,
+                               int     turnMotorCAN,
+                               int     turnEncoderCAN,
+                               boolean turnInverted) {
+    
+        m_ModuleName = name;
+        m_driveMotor = new CANSparkMax(driveMotorCAN, MotorType.kBrushless);
+        m_driveMotor.restoreFactoryDefaults();
+        m_driveMotor.setIdleMode(IdleMode.kBrake);
+        m_driveMotor.setInverted(driveInverted);
+        //FIXME ?m_driveMotor.setSmartCurrentLimit(xx);
+        m_driveEncoder = m_driveMotor.getEncoder();
+        m_driveEncoder.setPositionConversionFactor(Constants.SDSModuleConstants.DRIVE_VELOCITY_CONVERSION);
+        m_driveEncoder.setVelocityConversionFactor(Constants.SDSModuleConstants.DRIVE_VELOCITY_CONVERSION);
+
+        m_turnMotor = new CANSparkMax(turnMotorCAN, MotorType.kBrushless);
+        m_turnMotor.restoreFactoryDefaults();
+        m_turnMotor.setIdleMode(IdleMode.kBrake);
+        m_turnMotor.setInverted(driveInverted);
+        //FIXME ?m_turnMotor.setSmartCurrentLimit(xx);
+        m_turnEncoder = m_turnMotor.getEncoder();
+        m_turnEncoder.setPositionConversionFactor(Constants.SDSModuleConstants.TURN_DISTANCE_CONVERSION);
+        m_turnPID.enableContinuousInput(-Math.PI, Math.PI);
+        resetEncoders();
+    }
+
+    // public SwerveModuleState getState() {
+    //     return new SwerveModuelState(m_driveEncoder.getVelocity(), new Rotation2d(m_turnEncoder.getPosition()));
+    // }
+
+    // public SwerveModulePosition getPosition() {
+    //     return new SwerveModuelPosition(m_driveEncoder.getPosition(), new Rotation2d(m_turnEncoder.getPosition()));
+    // }
+
+    public void setDesiredState(SwerveModuelState desiredState) {
+        double driveOutput;
+        double turnOutput;
+        //FIXME Need to understand how this works!
+        var encoderRotation = new Rotaiton2d(m_turnEncoder.getPosition());
+
+        // Optimize the reference state to avoid spinning further than 90 degrees
+        SwerveModuleState state = SwerveModuleState.Optimize(desiredState, encoderRotation);
+
+        // Scale speed by cosine of angle error. This scales down movement perpendicular to the desired
+        //      direction of travel that can occur when modules change directions. This results in smoother driving ->
+        //          state.speedMetersPerSecond *= state.angle.minus(encoderRotation).getCos();
+
+        // Calculate the drive output from the drive PID controller.
+        driveOutput = //m_drivePID.calculate(m_driveEncoder.getVelocity(), state.speedMetersPerSecond());
+                        m_drivePID.calculate(0.0, state.speedMetersPerSecond());
+        
+        // PID calculation will  be between -ROBOT_MAX_LINEAR_VELOCITY and +ROBOT_MAX_LINEAR_VELOCITY.
+        // Normalize this between -1.0 and 1.0 to Send to SparkMax Controller.
+        driveOutput = driveOutput / Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY;
+
+
+        // Calculate the turning motor output from the turning PID controller.
+        turnOutput = m_turnPID.calculate(m_turnEncoder.getPosition(), state.angle.getRadians());
+
+        // PID calculation will be between -state.angle.radians and +state.angle.radians.
+        // Normalize this between -1.0 and 1.0 to Send to SparkMax Controller.
+        turnOutput = turnOutput / Math.abs(state.angle.getRadians());
+
+        // Calculate the turning motor output from the turning PID controller. 
+        m_driveMotor.set(driveOutput);
+        m_driveMotor.set(turnOutput);
+    }
+
+    public void resetEncoders() {
+        m_driveEncoder.setPosition(0.0);
+        m_turnEncoder.setPosition(0.0);
+    }
+    
+    public void WriteToSmartDashboard() {}
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
+}
