@@ -5,7 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  SwerveDriveSubsystem m_swerve = new SwerveDriveSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -27,6 +30,21 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     // Configure default commands
+    m_swerve.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () ->
+                m_swerve.drive(
+                    // Multiply by max speed to map the joystick unitless inputs to actual units.
+                    // This will map the [-1, 1] to [max speed backwards, max speed forwards],
+                    // converting them to actual units.
+                    //FIXME Use controller values for all axis temp only use one at a time to debug
+                    m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    0.0,//m_driverController.getRightX() * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
+                    false),
+                m_swerve));
   }
 
   /**
