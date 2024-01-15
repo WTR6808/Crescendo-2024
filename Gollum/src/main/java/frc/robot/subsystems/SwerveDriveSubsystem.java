@@ -13,6 +13,8 @@ import frc.robot.Constants;
 import frc.robot.Sensors.PigeonTwo;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
+  private static SwerveDriveSubsystem instance = null;
+
     //Create the four Swerve Modules
   private final MK4_L3_SwerveModule m_frontLeft =
       new MK4_L3_SwerveModule("Left Front", 
@@ -50,7 +52,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
   /** Creates a new SwerveDriveSubsystem. */
-  public SwerveDriveSubsystem() {}
+  public static SwerveDriveSubsystem Instance() {
+    if (instance == null) 
+      instance = new SwerveDriveSubsystem();
+
+    return instance;
+  }
+  private SwerveDriveSubsystem() {}
 
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
