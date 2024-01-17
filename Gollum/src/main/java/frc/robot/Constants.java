@@ -19,6 +19,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final double DEADZONE = 0.2;
   }
 
   public static class Measurements {
@@ -92,19 +93,21 @@ public final class Constants {
     //    Units are in Wheel Diameter Units/Second
     public static final double DRIVE_VELOCITY_CONVERSION = (Measurements.WHEEL_DIAMETER * Math.PI * MK4_L3_DRIVE_REDUCTION)/60.0;
 
+
     //Angular Distance Conversion Factor is Computed Using the Following Equation:
     // 2 * PI * Gear Ratio / Encoder's Counts per Revolutions
     //    Units are in Radians
     //When switching to CANCoder, Gear Ration is 1.0 since CANCoder is mounted directly to turn shaft
-    public static final double TURN_DISTANCE_CONVERSION = (2 * Math.PI * MK4_L3_TURN_REDUCTION) / TURN_ENCODER_CPR;
+    public static final double TURN_DISTANCE_CONVERSION = (2 * Math.PI * MK4_L3_TURN_REDUCTION * (2*Math.PI/6.31));// / TURN_ENCODER_CPR;
+   // public static final double TURN_DISTANCE_CONVERSION = (2 * Math.PI * MK4_L3_TURN_REDUCTION) / TURN_ENCODER_CPR;
 
      //PID Constants for Drive and Turn Motors
     //FIXME Need to tune these values
-    public static final double DRIVE_P = 1.0;
+    public static final double DRIVE_P = 0.5;
     public static final double DRIVE_I = 0.0;
     public static final double DRIVE_D = 0.0;
 
-    public static final double TURN_P  = 1.0;
+    public static final double TURN_P  = 0.1;
     public static final double TURN_I  = 0.0;
     public static final double TURN_D  = 0.0;
   }

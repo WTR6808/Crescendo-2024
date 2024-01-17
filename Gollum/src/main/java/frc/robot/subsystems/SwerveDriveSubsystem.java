@@ -4,15 +4,17 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Sensors.PigeonTwo;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
+  private static SwerveDriveSubsystem instance = null;
+
     //Create the four Swerve Modules
   private final MK4_L3_SwerveModule m_frontLeft =
       new MK4_L3_SwerveModule("Left Front", 
@@ -50,10 +52,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
   /** Creates a new SwerveDriveSubsystem. */
-  public SwerveDriveSubsystem() {}
+  public static SwerveDriveSubsystem Instance() {
+    if (instance == null) 
+      instance = new SwerveDriveSubsystem();
+
+    return instance;
+  }
+  private SwerveDriveSubsystem() {}
 
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
+    x = MathUtil.applyDeadband(x, Constants.OperatorConstants.DEADZONE);
+    y = MathUtil.applyDeadband(y, Constants.OperatorConstants.DEADZONE);
+    rot = MathUtil.applyDeadband(rot, Constants.OperatorConstants.DEADZONE);
+
+    //TODO Apply deadband to x, y, and rot
     if (fieldRelative)
     {
       speeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, rot, m_pigeon.getAngle());
@@ -62,8 +75,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     {
       speeds = new ChassisSpeeds(x,y,rot);
     }
-
+    //Output x,y, rot and Chassis Speeds to SmartDashboard
+    SmartDashboard.putNumber("Input x: ", x);
+    SmartDashboard.putNumber("Input y: ", y);
+    SmartDashboard.putNumber("Input r: ", rot);
+    SmartDashboard.putNumber("Speed x: ", speeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("Speed y: ", speeds.vyMetersPerSecond);
+    SmartDashboard.putNumber("Omega  : ", speeds.omegaRadiansPerSecond);
     var swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds);
+    //TODO replace swerveModuleStates with ...
+    //var swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
+    //                                ChassisSpeeds.discretize(speeds, TimedRobot.kDefaultPeriod));
+
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 
                                                 Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY);
     m_frontLeft.setDesiredState  (swerveModuleStates[0]);                                                

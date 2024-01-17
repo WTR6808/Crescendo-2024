@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  SwerveDriveSubsystem m_swerve = new SwerveDriveSubsystem();
+  SwerveDriveSubsystem m_swerve = SwerveDriveSubsystem.Instance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -40,8 +40,8 @@ public class RobotContainer {
                     // This will map the [-1, 1] to [max speed backwards, max speed forwards],
                     // converting them to actual units.
                     //FIXME Use controller values for all axis temp only use one at a time to debug
-                    m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
-                    m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    -m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//0.0 * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//
+                    -m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//0.0 * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//
                     0.0,//m_driverController.getRightX() * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
                     false),
                 m_swerve));
