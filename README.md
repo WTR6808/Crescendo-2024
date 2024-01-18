@@ -1,17 +1,22 @@
 # Crescendo-2024!
 
 ## Assigned Projects
-- Molly
+- Molly → ø  
   - PF + A little of _everything_
-- *Mitch* + *David*
+- *Mitch* → 3
   - SFS
-- Sergey 
+- *David* → 5
+  - SFS
+  - Lucke pts
+- Sergey → 5
   - Scouting App.. im trying ok?
-- Lucke<sup>2</sup>
+- Lucke ½ → 2
   - Learning?
-- Yaroslav 
+- Lucke ½ → 4
   - Learning?
-- Mike 
+- Yaroslav → 1
+  - Learning?
+- Mike → 2
   - Learning?
 
 ## To Do's
