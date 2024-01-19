@@ -101,6 +101,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     m_backLeft.setDesiredState   (swerveModuleStates[2]);                                                
     m_backRight.setDesiredState  (swerveModuleStates[3]);                                                
   }
+
+  public void resetEncoders() {
+    m_frontLeft.resetEncoders();
+    m_backLeft.resetEncoders();
+    m_frontRight.resetEncoders();
+    m_backRight.resetEncoders();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
