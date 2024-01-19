@@ -58,7 +58,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     return instance;
   }
-  private SwerveDriveSubsystem() {}
+  private SwerveDriveSubsystem() {
+    SmartDashboard.putNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
+    SmartDashboard.putNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
+    SmartDashboard.putNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
+    SmartDashboard.putNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
+    SmartDashboard.putNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
+    SmartDashboard.putNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
+  }
 
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;

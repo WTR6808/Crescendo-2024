@@ -63,7 +63,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     //m_turnEncoder.setVelocityConversionFactor(Constants.SDSModuleConstants.DRIVE_VELOCITY_CONVERSION);
     m_turnPID.enableContinuousInput(-Math.PI, Math.PI);
 
-    //TODO Point out that we forgot this on 1/13/2024
+    //Zero the Encoders
     resetEncoders();
   }
 
@@ -79,14 +79,10 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     double driveVelocity = m_driveEncoder.getVelocity();
 
     SwerveModuleState state = SwerveModuleState.optimize(desiredState,encoderRotation);
-    //FIXME For debug/testing remove PID
     driveOutput = m_drivePID.calculate(driveVelocity,state.speedMetersPerSecond);
-    //driveOutput = state.speedMetersPerSecond;
     driveOutput = driveOutput / Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY;
 
     turnOutput = MathUtil.clamp(m_turnPID.calculate(encoderRotation.getRadians(),state.angle.getRadians()),-1.0,1.0);
-    //turnOutput = MathUtil.clamp(turnOutput, -1.0, 1.0);
-    //turnOutput = (state.angle.getRadians()==0)?0.0:turnOutput / Math.abs(state.angle.getRadians());
 
     //Send States to SmartDashboard
     SmartDashboard.putNumber(m_name+" Desired Speed: ", desiredState.speedMetersPerSecond);
@@ -106,5 +102,20 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    double dp,di,dd, tp, ti, td;
+    dp = SmartDashboard.getNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
+    di = SmartDashboard.getNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
+    dd = SmartDashboard.getNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
+    tp = SmartDashboard.getNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
+    ti = SmartDashboard.getNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
+    td = SmartDashboard.getNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
+
+    if (dp != m_drivePID.getP() || di != m_drivePID.getI() || dd != m_drivePID.getD()){
+      m_drivePID.setPID(dp,di,dd);
+    }
+
+    if (tp != m_turnPID.getP() || ti != m_turnPID.getI() || td != m_turnPID.getD()){
+      m_drivePID.setPID(tp,ti,td);
+    }
   }
 }
