@@ -16,13 +16,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   private static SwerveDriveSubsystem instance = null;
 
     //Create the four Swerve Modules
-  private final MK4_L3_SwerveModule m_frontLeft =
+    private final MK4_L3_SwerveModule m_frontLeft =
       new MK4_L3_SwerveModule("Left Front", 
                               Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_CANID,
                               Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_INVERTED,
                               Constants.SwerveDriveConstants.FRONT_LEFT_TURN_CANID,
                               Constants.SwerveDriveConstants.FRONT_LEFT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID);         
+                              Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID,
+                              Constants.SwerveDriveConstants.FRONT_LEFT_OFFSET);         
 
   private final MK4_L3_SwerveModule m_frontRight =
       new MK4_L3_SwerveModule("Right Front", 
@@ -30,7 +31,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                               Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_INVERTED,
                               Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_CANID,
                               Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID);         
+                              Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID,
+                              Constants.SwerveDriveConstants.FRONT_RIGHT_OFFSET);         
 
   private final MK4_L3_SwerveModule m_backRight =
       new MK4_L3_SwerveModule("Right Back", 
@@ -38,7 +40,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                               Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_INVERTED,
                               Constants.SwerveDriveConstants.BACK_RIGHT_TURN_CANID,
                               Constants.SwerveDriveConstants.BACK_RIGHT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID); 
+                              Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID,
+                              Constants.SwerveDriveConstants.BACK_RIGHT_OFFSET); 
 
   private final MK4_L3_SwerveModule m_backLeft =
       new MK4_L3_SwerveModule("Left Back", 
@@ -46,8 +49,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                               Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_INVERTED,
                               Constants.SwerveDriveConstants.BACK_LEFT_TURN_CANID,
                               Constants.SwerveDriveConstants.BACK_LEFT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID);
-                              
+                              Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
+                              Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
+                            
   //Create CTRE Pigeon 2
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
@@ -70,10 +74,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
     x = MathUtil.applyDeadband(x, Constants.OperatorConstants.DEADZONE);
-    y = MathUtil.applyDeadband(y, Constants.OperatorConstants.DEADZONE);
+    y = MathUtil.applyDeadband(y, .5);
     rot = MathUtil.applyDeadband(rot, Constants.OperatorConstants.DEADZONE);
 
-    //TODO Apply deadband to x, y, and rot
     if (fieldRelative)
     {
       speeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, rot, m_pigeon.getAngle());

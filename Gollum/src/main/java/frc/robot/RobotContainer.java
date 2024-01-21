@@ -42,9 +42,9 @@ public class RobotContainer {
                     // This will map the [-1, 1] to [max speed backwards, max speed forwards],
                     // converting them to actual units.
                     //FIXME Use controller values for all axis temp only use one at a time to debug
-                    -m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//0.0 * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//
-                    -m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//0.0 * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,//
-                    0.0,//m_driverController.getRightX() * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
+                    -m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    -m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    -m_driverController.getRightX() * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
                     false),
                 m_swerve));
     SmartDashboard.putData("Reset Encoders", new InstantCommand(()->m_swerve.resetEncoders(), m_swerve));

@@ -19,7 +19,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final double DEADZONE = 0.2;
+    public static final double DEADZONE = 0.3;
   }
 
   public static class Measurements {
@@ -44,25 +44,28 @@ public final class Constants {
     public static final int FRONT_LEFT_ENCODER_CAN_ID      = 43;
     public static final boolean FRONT_LEFT_DRIVE_INVERTED  = true;
     public static final boolean FRONT_LEFT_TURN_INVERTED   = false;
+    public static final double FRONT_LEFT_OFFSET           = 0.294;
 
     public static final int FRONT_RIGHT_DRIVE_CANID        = 11;
     public static final int FRONT_RIGHT_TURN_CANID         = 12;
     public static final int FRONT_RIGHT_ENCODER_CAN_ID     = 13;
     public static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
     public static final boolean FRONT_RIGHT_TURN_INVERTED  = false;
+    public static final double FRONT_RIGHT_OFFSET           = -0.489;
 
     public static final int BACK_LEFT_DRIVE_CANID          = 31;
     public static final int BACK_LEFT_TURN_CANID           = 32;
     public static final int BACK_LEFT_ENCODER_CAN_ID       = 33;
     public static final boolean BACK_LEFT_DRIVE_INVERTED   = true;
     public static final boolean BACK_LEFT_TURN_INVERTED    = false;
+    public static final double BACK_LEFT_OFFSET           = 0.208;
 
     public static final int BACK_RIGHT_DRIVE_CANID         = 21;
     public static final int BACK_RIGHT_TURN_CANID          = 22;
     public static final int BACK_RIGHT_ENCODER_CAN_ID      = 23;
     public static final boolean BACK_RIGHT_DRIVE_INVERTED  = false;
     public static final boolean BACK_RIGHT_TURN_INVERTED   = false;
-
+    public static final double BACK_RIGHT_OFFSET           = 0.43;//-0.454;
     //Robot Kinematic Constants
     public static final SwerveDriveKinematics DRIVE_KINEMATICS =
         new SwerveDriveKinematics(
@@ -76,12 +79,9 @@ public final class Constants {
   public static class SDSModuleConstants {
     public static final double MK4_L3_DRIVE_REDUCTION = (14.0 / 50.0) * (28.0 / 16.0) * (15.0 / 45.0);
     public static final double MK4_L3_TURN_REDUCTION  = (15.0 / 32.0) * (10.0 / 60.0);
-    public static final boolean MK4_L3_DRIVE_INVERTED = true;
-    public static final boolean MK4_L3_TURN_INVERTED  = true;
 
     //Encoder Constants
     public static final double DRIVE_ENCODER_CPR = 42.0; //NEO Built In
-    public static final double TURN_ENCODER_CPR  = 42.0; //NEO Built In
   
     //Linear Distance Conversion Factor is Computed Using the Following Equation:
     //  Wheel Diameter * PI * Gear Ratio / Encoder's Counts per Revolutions
@@ -98,7 +98,6 @@ public final class Constants {
     // 2 * PI * Gear Ratio / Encoder's Counts per Revolutions
     //    Units are in Radians
     //When switching to CANCoder, Gear Ration is 1.0 since CANCoder is mounted directly to turn shaft
-    public static final double TURN_DISTANCE_CONVERSION = (2 * Math.PI * MK4_L3_TURN_REDUCTION * (2*Math.PI/6.31));// / TURN_ENCODER_CPR;
    // public static final double TURN_DISTANCE_CONVERSION = (2 * Math.PI * MK4_L3_TURN_REDUCTION) / TURN_ENCODER_CPR;
 
      //PID Constants for Drive and Turn Motors
