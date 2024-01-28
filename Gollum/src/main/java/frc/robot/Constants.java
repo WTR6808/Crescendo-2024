@@ -44,28 +44,28 @@ public final class Constants {
     public static final int FRONT_LEFT_ENCODER_CAN_ID      = 43;
     public static final boolean FRONT_LEFT_DRIVE_INVERTED  = true;
     public static final boolean FRONT_LEFT_TURN_INVERTED   = false;
-    public static final double FRONT_LEFT_OFFSET           = 0.294;
+    public static final double FRONT_LEFT_OFFSET           = 0.300; //.260//0.294
 
     public static final int FRONT_RIGHT_DRIVE_CANID        = 11;
     public static final int FRONT_RIGHT_TURN_CANID         = 12;
     public static final int FRONT_RIGHT_ENCODER_CAN_ID     = 13;
     public static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
     public static final boolean FRONT_RIGHT_TURN_INVERTED  = false;
-    public static final double FRONT_RIGHT_OFFSET           = -0.489;
+    public static final double FRONT_RIGHT_OFFSET           = -0.338; //0.489//-0.385
 
     public static final int BACK_LEFT_DRIVE_CANID          = 31;
     public static final int BACK_LEFT_TURN_CANID           = 32;
     public static final int BACK_LEFT_ENCODER_CAN_ID       = 33;
     public static final boolean BACK_LEFT_DRIVE_INVERTED   = true;
     public static final boolean BACK_LEFT_TURN_INVERTED    = false;
-    public static final double BACK_LEFT_OFFSET           = 0.208;
+    public static final double BACK_LEFT_OFFSET           = 0.214; //0.171//0.208
 
     public static final int BACK_RIGHT_DRIVE_CANID         = 21;
     public static final int BACK_RIGHT_TURN_CANID          = 22;
     public static final int BACK_RIGHT_ENCODER_CAN_ID      = 23;
     public static final boolean BACK_RIGHT_DRIVE_INVERTED  = false;
     public static final boolean BACK_RIGHT_TURN_INVERTED   = false;
-    public static final double BACK_RIGHT_OFFSET           = 0.43;//-0.454;
+    public static final double BACK_RIGHT_OFFSET           = 0.480;//-0.43;//-0.454
     //Robot Kinematic Constants
     public static final SwerveDriveKinematics DRIVE_KINEMATICS =
         new SwerveDriveKinematics(
@@ -102,11 +102,11 @@ public final class Constants {
 
      //PID Constants for Drive and Turn Motors
     //FIXME Need to tune these values
-    public static final double DRIVE_P = 0.5;
+    public static final double DRIVE_P = 1;
     public static final double DRIVE_I = 0.0;
-    public static final double DRIVE_D = 0.0;
+    public static final double DRIVE_D = 0.0005;
 
-    public static final double TURN_P  = 0.1;
+    public static final double TURN_P  = 0.4;
     public static final double TURN_I  = 0.0;
     public static final double TURN_D  = 0.0;
   }

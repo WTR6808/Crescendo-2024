@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -26,6 +27,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  private final Joystick m_Joystick = 
+      new Joystick(OperatorConstants.DRIVER_CONTROLLER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,12 +45,13 @@ public class RobotContainer {
                     // This will map the [-1, 1] to [max speed backwards, max speed forwards],
                     // converting them to actual units.
                     //FIXME Use controller values for all axis temp only use one at a time to debug
-                    -m_driverController.getLeftY() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
-                    -m_driverController.getLeftX() * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
-                    -m_driverController.getRightX() * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
+                    -m_driverController.getLeftY(),// * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    -m_driverController.getLeftX(),// * Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY,
+                    -m_driverController.getRightX(),// * Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY,
                     false),
                 m_swerve));
     SmartDashboard.putData("Reset Encoders", new InstantCommand(()->m_swerve.resetEncoders(), m_swerve));
+    SmartDashboard.putData("Reset Gyro (Pigeon2)", new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve));
   }
 
   /**

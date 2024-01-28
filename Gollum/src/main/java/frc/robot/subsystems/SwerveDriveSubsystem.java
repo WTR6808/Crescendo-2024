@@ -55,6 +55,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   //Create CTRE Pigeon 2
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
+  private Double current;
+  private Double voltage;
   /** Creates a new SwerveDriveSubsystem. */
   public static SwerveDriveSubsystem Instance() {
     if (instance == null) 
@@ -74,8 +76,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
     x = MathUtil.applyDeadband(x, Constants.OperatorConstants.DEADZONE);
-    y = MathUtil.applyDeadband(y, .5);
-    rot = MathUtil.applyDeadband(rot, Constants.OperatorConstants.DEADZONE);
+    y = MathUtil.applyDeadband(y, Constants.OperatorConstants.DEADZONE);
+    rot = smoother_input(MathUtil.applyDeadband(rot, Constants.OperatorConstants.DEADZONE));
 
     if (fieldRelative)
     {
@@ -115,5 +117,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    current = (m_frontLeft.get_current() + m_frontRight.get_current() + m_backLeft.get_current() + m_backRight.get_current()) / 4;
+    SmartDashboard.putNumber("Current", current);
+    voltage = (m_frontLeft.get_voltage() + m_frontRight.get_voltage() + m_backLeft.get_voltage() + m_backRight.get_voltage()) / 4;
+    SmartDashboard.putNumber("Voltage", voltage);
+  }
+  private double smoother_input(double d) {
+    if (d==0) {
+      return 0;
+    }
+    return d<0 ? -((Math.pow(d, 2)+ Math.pow(d, 4)) / 2) : ((Math.pow(d, 2)+ Math.pow(d, 4)) / 2);
+  }
+  public void reset_pigeon2() {
+    m_pigeon.reset();
   }
 }

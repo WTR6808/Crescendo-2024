@@ -98,10 +98,10 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     //Commented out use of PID for drive motor and just using Joystick Inputs
     //  Need to learn how to properly use/tune velocity PID
     //driveOutput = m_drivePID.calculate(driveVelocity,state.speedMetersPerSecond);
-    driveOutput = state.speedMetersPerSecond/Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY;
+    driveOutput = state.speedMetersPerSecond;
     driveOutput = MathUtil.clamp(driveOutput, -.85, .85); //FIXME Change to Constants DRIVE_SPEED_LIMITER
 
-    turnOutput = m_turnPID.calculate(encoderRotation.getRadians(),state.angle.getRadians())/Constants.Measurements.ROBOT_MAX_ANGULAR_VELOCITY;
+    turnOutput = m_turnPID.calculate(encoderRotation.getRadians(),state.angle.getRadians());
     turnOutput = MathUtil.clamp(turnOutput,-0.85,0.85); //FIXME Change to Constants TURN_SPEED_LIMITER
 
     //Send States to SmartDashboard
@@ -122,7 +122,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    /*double dp,di,dd, tp, ti, td;
+    double dp,di,dd, tp, ti, td;
     dp = SmartDashboard.getNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
     di = SmartDashboard.getNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
     dd = SmartDashboard.getNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
@@ -140,5 +140,12 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
 
     SmartDashboard.putNumber("Current", m_driveMotor.getOutputCurrent());
     
+  }
+  public double get_current() {
+    return m_driveMotor.getOutputCurrent();
+  }
+  public double get_voltage() {
+    return m_turnMotor.getAppliedOutput()*m_turnMotor.getBusVoltage() 
+         + m_driveMotor.getAppliedOutput()*m_driveMotor.getBusVoltage();
   }
 }
