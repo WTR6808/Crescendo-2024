@@ -1,27 +1,29 @@
 # Crescendo-2024!
 
 ## Assigned Projects
-- Molly → ø  
+- Molly → ø + 1
   - PF + A little of _everything_
-- *Mitch* → 3
+- *Mitch* → 12
   - SFS
-- *David* → 5
+- *David* → 15
   - SFS
   - Lucke pts
-- Sergey → 5
+- Sergey → 13
   - Scouting App.. im trying ok?
-- Lucke ½ → 2
+- Luc → 6
   - Learning?
-- Lucke ½ → 4
+- Luke → 14
   - Learning?
-- Yaroslav → 1
+- Yaroslav → 6
   - Learning?
-- Mike → 2
+- Mike → 3
   - Learning?
+- Justin → 2
+  - hmm...
 
 ## To Do's
 - Swerve Drive from Scratch!
-  - Swerve from Canned code...
+  -  Swerve from Canned code...
 - Path Following 
   - Sysid
 - Reprogram Tank Drive Mechanum 
