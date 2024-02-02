@@ -1,32 +1,38 @@
 # Crescendo-2024!
 
 ## Assigned Projects
-- Molly → ø + 1
+- Molly → ø + 2
   - PF + A little of _everything_
-- *Mitch* → 12
-  - SFS
-- *David* → 15
-  - SFS
+- *Mitch* → 17
+  - SFS in a bit
+- *David* → 19
+  - SFS in a bit
   - Lucke pts
 - Sergey → 13
-  - Scouting App.. im trying ok?
-- Luc → 6
-  - Learning?
-- Luke → 14
-  - Learning?
-- Yaroslav → 6
-  - Learning?
+  - Scouting App.. still trying ok?
+  - Unsuccessfully Obtaining Less (Lu)^2cke points
+- Luc → 14
+  - Doing quests
+- Luke → 21
+  - Doing quests
+- Yaroslav → 9
+  - Doing quests
 - Mike → 3
-  - Learning?
-- Justin → 2
-  - hmm...
+  - Doing quests
+- Justin → 5
+  - Not breaking the batteries
+  - Not short-circuiting the bot
+- Knorr
+  - Being the best Knorr
+  - Teaching?
+- Deissler
+  - Being the Supreme... wait can someone tell me his title again?
 
 ## To Do's
-- Swerve Drive from Scratch!
-  -  Swerve from Canned code...
-- Path Following 
-  - Sysid
-- Reprogram Tank Drive Mechanum 
+- Probably finish the launcher subsystem
+- Work on custom swerve
+- Planning Autonymous (Lower Priority)
+- Figure out where to put Sergey's -7 Lucke Points
 
 ## Bot Notes
 - `FR, BR` drive motors are `not inverted`
