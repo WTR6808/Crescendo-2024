@@ -1,0 +1,194 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Right Back Drive Output: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="837" y="315"/>
+	</widget>
+	<widget field="Right Back Turn Output : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="837" y="293"/>
+	</widget>
+	<widget field="Left Back Drive Output: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="278" y="314"/>
+	</widget>
+	<widget field="Left Back Turn Output : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="278" y="292"/>
+	</widget>
+	<widget field="Right Front Drive Output: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="832" y="188"/>
+	</widget>
+	<widget field="Right Front Turn Output : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="832" y="165"/>
+	</widget>
+	<widget field="Left Front Drive Output: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="273" y="185"/>
+	</widget>
+	<widget field="Left Front Turn Output : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="272" y="163"/>
+	</widget>
+	<widget field="Right Back Absolute Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="565" y="420"/>
+	</widget>
+	<widget field="Left Back Absolute Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="412"/>
+	</widget>
+	<widget field="Right Front Absolute Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="548" y="123"/>
+	</widget>
+	<widget field="Left Front Absolute Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="241" y="127"/>
+	</widget>
+	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="12" y="434"/>
+	</widget>
+	<widget field="Turn D" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="593" y="66"/>
+	</widget>
+	<widget field="Turn I" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="596" y="43"/>
+	</widget>
+	<widget field="Turn P" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="593" y="21"/>
+	</widget>
+	<widget field="Drive D" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="458" y="67"/>
+	</widget>
+	<widget field="Drive I" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="461" y="44"/>
+	</widget>
+	<widget field="Drive P" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="458" y="21"/>
+	</widget>
+	<widget field="Right Back Turn Encoder Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="816" y="356"/>
+	</widget>
+	<widget field="Right Back Drive Encoder Vel: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="817" y="378"/>
+	</widget>
+	<widget field="Right Back Optimized Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="558" y="357"/>
+	</widget>
+	<widget field="Right Back Optimized Speed:" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="558" y="335"/>
+	</widget>
+	<widget field="Right Back Desired Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="569" y="312"/>
+	</widget>
+	<widget field="Right Back Desired Speed: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="566" y="290"/>
+		<height>20</height>
+	</widget>
+	<widget field="Left Back Turn Encoder Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="255" y="355"/>
+	</widget>
+	<widget field="Left Back Drive Encoder Vel: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="255" y="378"/>
+	</widget>
+	<widget field="Left Back Optimized Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="355"/>
+	</widget>
+	<widget field="Left Back Optimized Speed:" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="17" y="333"/>
+	</widget>
+	<widget field="Left Back Desired Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="28" y="311"/>
+	</widget>
+	<widget field="Left Back Desired Speed: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="25" y="289"/>
+	</widget>
+	<widget field="Right Front Turn Encoder Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="811" y="229"/>
+	</widget>
+	<widget field="Right Front Drive Encoder Vel: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="812" y="253"/>
+	</widget>
+	<widget field="Right Front Optimized Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="554" y="229"/>
+	</widget>
+	<widget field="Right Front Optimized Speed:" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="554" y="207"/>
+	</widget>
+	<widget field="Right Front Desired Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="565" y="185"/>
+	</widget>
+	<widget field="Right Front Desired Speed: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="562" y="163"/>
+	</widget>
+	<widget field="Left Front Turn Encoder Pos: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="251" y="229"/>
+	</widget>
+	<widget field="Left Front Drive Encoder Vel: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="251" y="253"/>
+	</widget>
+	<widget field="Left Front Optimized Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="13" y="230"/>
+		<height>20</height>
+	</widget>
+	<widget field="Left Front Optimized Speed:" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="14" y="208"/>
+	</widget>
+	<widget field="Left Front Desired Angle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="25" y="186"/>
+		<height>20</height>
+	</widget>
+	<widget field="Left Front Desired Speed: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="164"/>
+	</widget>
+	<widget field="Omega  : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="154" y="69"/>
+	</widget>
+	<widget field="Speed y: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="154" y="45"/>
+	</widget>
+	<widget field="Speed x: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="153" y="22"/>
+	</widget>
+	<widget field="Input r: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="71"/>
+	</widget>
+	<widget field="Input y: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="47"/>
+	</widget>
+	<widget field="Input x: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="24"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="5" y="11"/>
+		<width>294</width>
+		<height>91</height>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="6" y="154"/>
+		<width>489</width>
+		<height>127</height>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="6" y="285"/>
+		<width>488</width>
+		<height>119</height>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="548" y="154"/>
+		<width>510</width>
+		<height>125</height>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="549" y="285"/>
+		<width>508</width>
+		<height>122</height>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="449" y="11"/>
+		<width>277</width>
+		<height>88</height>
+		<property name="Connection Color" value="153.255.255.255"/>
+	</static-widget>
+	<widget field="Current" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+		<location x="750" y="25"/>
+		<width>406</width>
+		<height>118</height>
+		<property name="Buffer Size (samples)" value="50"/>
+		<property name="Maximum Y Value" value="3"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
