@@ -10,6 +10,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,6 +27,9 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
 
   private SparkPIDController m_leftPidController = m_leftLaunchMotor.getPIDController();
   private SparkPIDController m_rightPidController = m_rightLaunchMotor.getPIDController();
+
+  private Servo m_leftFlipper = new Servo(Constants.launcherConstants.LEFT_FLIPPER_PORT);
+  private Servo m_rightFlipper = new Servo(Constants.launcherConstants.RIGHT_FLIPPER_PORT);
   
   public static IT_IS_A_LAUNCHER Instance() {
     if (instance == null) {
@@ -63,6 +67,8 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_leftPidController.setOutputRange(-1,1);
 
     stopLauncher();
+
+    flipperDown();
  }
 
   public void resetEncoders(){
@@ -115,10 +121,28 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_leftPidController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
+
+  public void flipperUp(){
+    m_leftFlipper.set(Constants.launcherConstants.LEFT_UP);
+    m_rightFlipper.set(Constants.launcherConstants.RIGHT_UP);
+  }
+
+  public void flipperDown(){
+    m_leftFlipper.set(Constants.launcherConstants.LEFT_DOWN);
+    m_rightFlipper.set(Constants.launcherConstants.RIGHT_DOWN);
+  }
+
+  public double getVelocity(){
+    return (m_leftLaunchEncoder.getVelocity() + m_rightLaunchEncoder.getVelocity()) / 2.0;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Velocity", m_leftLaunchEncoder.getVelocity());
     SmartDashboard.putNumber("Right Velocity", m_rightLaunchEncoder.getVelocity());
+
+    SmartDashboard.putNumber("Left Flipper", m_leftFlipper.getAngle());
+    SmartDashboard.putNumber("Right Flipper", m_rightFlipper.getAngle());
   }
 }

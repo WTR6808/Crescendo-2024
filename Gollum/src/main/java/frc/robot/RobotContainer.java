@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.LaunchAmp;
+import frc.robot.commands.LaunchSpeaker;
 import frc.robot.subsystems.IT_IS_A_LAUNCHER;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -31,6 +34,8 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
   private final Joystick m_Joystick = 
       new Joystick(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  private final CommandXboxController m_operatorController =
+      new CommandXboxController(OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,18 +49,18 @@ public class RobotContainer {
        // Multiply by max speed to map the joystick unitless inputs to actual units.
        // This will map the [-1, 1] to [max speed backwards, max speed forwards],
        // converting them to actual units.
-       //FIXME Use controller values for all axis temp only use one at a time to debug
         new RunCommand(
             () ->
                 m_swerve.drive(
-                    /*
-                    m_Joystick.getX(),
-                    m_Joystick.getY(), 
-                    m_Joystick.getZ(),
-                     */
+                    /* */
+                    -m_Joystick.getY(),
+                    -m_Joystick.getX(), 
+                    -m_Joystick.getZ(),
+                     /* */ /* 
                     -m_driverController.getLeftY(), 
                     -m_driverController.getLeftX(),
                     -m_driverController.getRightX(),
+                    */
                     true),
                 m_swerve));
     SmartDashboard.putData("Reset Encoders", new InstantCommand(()->m_swerve.resetEncoders(), m_swerve));
@@ -83,6 +88,16 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    final JoystickButton DriverResetGyro = new JoystickButton(m_Joystick, Constants.Buttons.BUTTON_RESET_GYRO);
+    DriverResetGyro.onTrue(new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve)); 
+    //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : ) 
+m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
+//m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
+
+m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
+    
+
+
   }
 
   /**

@@ -19,7 +19,12 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final double DEADZONE = 0.3;
+    public static final double DEADZONE = 0.05;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
+  }
+
+  public static class Buttons {
+    public static final int BUTTON_RESET_GYRO = 7;
   }
 
   public static class Measurements {
@@ -141,6 +146,8 @@ public final class Constants {
     public static final int RIGHT_LAUNCH_CANID        = 62;
     public static final boolean LEFT_LAUNCH_INVERTED  = true;
     public static final boolean RIGHT_LAUNCH_INVERTED = false;
+    public static final int LEFT_FLIPPER_PORT = 0;
+    public static final int RIGHT_FLIPPER_PORT = 1;
 
     //PID Constants for Launcher Motors
     public static final double SPEAKER_LAUNCH_P     =    0.0001;
@@ -148,14 +155,25 @@ public final class Constants {
     public static final double SPEAKER_LAUNCH_D     =    0.0;
     public static final double SPEAKER_LAUNCH_IZONE =    0.0;
     public static final double SPEAKER_FEEDFORWARD  =    0.00017; //0.00125/4.0;
-    public static final double SPEAKER_VELOCITY     = 4800.0; //5500;
+    public static final double SPEAKER_VELOCITY     = 5800.0; //5500;
 
     public static final double AMP_LAUNCH_P         =    0.0001;
     public static final double AMP_LAUNCH_I         =    0.0;
     public static final double AMP_LAUNCH_D         =    0.0;
     public static final double AMP_LAUNCH_IZONE     =    0.0;
     public static final double AMP_FEEDFORWARD      =    0.00017;
-    public static final double AMP_VELOCITY         = 1000.0;
+    public static final double AMP_VELOCITY         = 800.0;
     //TODO find velocity constants for launcher
+
+    //Make Flipper Constansts
+    public static final double LEFT_UP            = 0.0;
+    public static final double RIGHT_UP            = 0.17;
+
+    public static final double LEFT_DOWN            = 0.17;
+    public static final double RIGHT_DOWN            = 0.0;
+
+    //Make Command Constants
+    public static final double VELOCITY_TOLERANCE    = 100.0;
+    public static final int FLIP_VWOOP_TIME          = 60;
   }
 }

@@ -56,7 +56,7 @@ public class LimelightTwo {
     }
 
     //Make Constructor Private to enforce Singleton behavior
-    public LimelightTwo(){
+    private LimelightTwo(){
 		//Set the tolerance & Set Points for the PID Controllers
 		m_drivePID.setTolerance(Y_TOLERANCE);
 		m_drivePID.setSetpoint(0.0);
@@ -67,6 +67,7 @@ public class LimelightTwo {
         table.getEntry("ledMode").setNumber(0);
 
         //Initialize Target Tracking to Off
+//TODO Uncomment when Constants Updated
 //        setTrackTarget(false, Constants.LimelightConstants.DRIVE_PIPELINE);
     }
 
