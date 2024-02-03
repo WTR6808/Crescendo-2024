@@ -1,0 +1,13 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Reset Encoders": "Command",
+      "/SmartDashboard/Reset Gyro (Pigeon2)": "Command",
+      "/SmartDashboard/Run Launchers": "Command"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}

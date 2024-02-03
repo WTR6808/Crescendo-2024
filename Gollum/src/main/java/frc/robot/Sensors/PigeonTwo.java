@@ -92,7 +92,7 @@ public class PigeonTwo {
     public Rotation2d getAngle(){
 //        double yaw = m_pigeon2.getYaw().refresh().getValueAsDouble();
 //        return Rotation2d.fromDegrees(yaw);
-        return Rotation2d.fromDegrees(m_pigeon2.getAngle());
+        return Rotation2d.fromDegrees(-m_pigeon2.getAngle());
     }
 
     public Rotation2d getRoll(){
