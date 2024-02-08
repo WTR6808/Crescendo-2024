@@ -126,13 +126,13 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double dp,di,dd, tp, ti, td;
-    dp = SmartDashboard.getNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
-    di = SmartDashboard.getNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
-    dd = SmartDashboard.getNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
-    tp = SmartDashboard.getNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
-    ti = SmartDashboard.getNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
-    td = SmartDashboard.getNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
+//    double dp,di,dd, tp, ti, td;
+//    dp = SmartDashboard.getNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
+//    di = SmartDashboard.getNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
+//    dd = SmartDashboard.getNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
+//    tp = SmartDashboard.getNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
+//    ti = SmartDashboard.getNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
+//    td = SmartDashboard.getNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
 
    /*  if (dp != m_drivePID.getP() || di != m_drivePID.getI() || dd != m_drivePID.getD()){
       m_drivePID.setPID(dp,di,dd);

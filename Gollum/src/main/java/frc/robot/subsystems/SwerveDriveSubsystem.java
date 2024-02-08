@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Sensors.LimelightTwo;
 import frc.robot.Sensors.PigeonTwo;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
@@ -55,6 +56,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   //Create CTRE Pigeon 2
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
+  //Get Instance of the Limelight
+  LimelightTwo m_limelight = LimelightTwo.Instance();
+
   //Used for current and voltage graphing;
   private Double current;
   private Double voltage;
@@ -66,19 +70,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     return instance;
   }
+
   private SwerveDriveSubsystem() {
-    SmartDashboard.putNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
-    SmartDashboard.putNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
-    SmartDashboard.putNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
-    SmartDashboard.putNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
-    SmartDashboard.putNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
-    SmartDashboard.putNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
+//    SmartDashboard.putNumber("Drive P", Constants.SDSModuleConstants.DRIVE_P);
+//    SmartDashboard.putNumber("Drive I", Constants.SDSModuleConstants.DRIVE_I);
+//    SmartDashboard.putNumber("Drive D", Constants.SDSModuleConstants.DRIVE_D);
+//    SmartDashboard.putNumber("Turn P", Constants.SDSModuleConstants.TURN_P);
+//    SmartDashboard.putNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
+//    SmartDashboard.putNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
   }
 
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
-    x = MathUtil.applyDeadband(x, Constants.OperatorConstants.DEADZONE);
-    y = MathUtil.applyDeadband(y, Constants.OperatorConstants.DEADZONE);
+    x = smoother_input(MathUtil.applyDeadband(x, Constants.OperatorConstants.DEADZONE));
+    y = smoother_input(MathUtil.applyDeadband(y, Constants.OperatorConstants.DEADZONE));
     rot = smoother_input(MathUtil.applyDeadband(rot, Constants.OperatorConstants.DEADZONE));
 
     if (fieldRelative)
@@ -133,9 +138,52 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       return 0;
     }
     return d<0 ? -((Math.pow(d, 2)+ Math.pow(d, 4)) / 2) : ((Math.pow(d, 2)+ Math.pow(d, 4)) / 2);
+    //return Math.signum(d) * ((Math.pow(d, 2)+ Math.pow(d, 4)) / 2);
   }
 
   public void reset_pigeon2() {
     m_pigeon.reset();
+  } 
+
+  public void initDriveToTarget(){
+    m_limelight.initializeTargetTracking();
   }
+
+  public void stopDriveToTarget(){
+    m_limelight.endTargetTracking();
+  }
+
+  public boolean driveToTarget(){
+    boolean valid = true;
+    /**********************************************************
+      Call alternate calcMotorControl here
+      May have to change fieldRelative to true
+
+      May also have to use a different drive command that
+      rotates the bot to 0, 90, 180 or 270
+      sets an angle on the wheels and drives at that angle
+      for a computed distance and then searches for target
+      again to check errors in X and Y to adjust.
+    ***********************************************************/
+    if (m_limelight.calcMotorControl()){
+      drive(m_limelight.driveCommand(), 
+            m_limelight.strafeCommand(), 
+            m_limelight.steerCommand(),
+            false);
+    } else {
+      valid = false;
+    }
+    return valid;
+  }
+
+  //TODO Need to add following methods Driving to Target with Limelight:
+  //    At beginning create instance of LimelightTwo
+  //    Add Methods for the following:
+  //      void stopDriving() -- stops the bot
+  //      bool startTracking() -- will need to get TagId from Limelight and set Pipeline accordingly
+  //                               need to handle case of no TagId at initializtion
+  //      bool driveToTarget() -- will need to get TagId from Limelight if one wasn't found at initialization
+  //                                check for aborted command (i.e., stopDriveToTarget was called)
+  //                                call drive with Limelight values in robot centric mode
+  //      void stopDriveToTarget() -- Turn LEDs off force driveToTarget to return false;
 }

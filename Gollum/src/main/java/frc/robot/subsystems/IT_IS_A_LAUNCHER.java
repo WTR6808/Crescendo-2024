@@ -109,9 +109,19 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
   }
 
   public void reverseLauncher(){
-    stopLauncher(); 
-    m_leftLaunchMotor.set(-.85);
-    m_rightLaunchMotor.set(-.85);
+    m_rightPidController.setP(Constants.launcherConstants.AMP_LAUNCH_P);
+    m_rightPidController.setI(Constants.launcherConstants.AMP_LAUNCH_I);
+    m_rightPidController.setD(Constants.launcherConstants.AMP_LAUNCH_D);
+    m_rightPidController.setIZone(Constants.launcherConstants.AMP_LAUNCH_IZONE);
+    m_rightPidController.setFF(Constants.launcherConstants.AMP_FEEDFORWARD);
+    m_rightPidController.setReference(Constants.launcherConstants.AMP_VELOCITY * -1, CANSparkMax.ControlType.kVelocity);
+
+    m_leftPidController.setP(Constants.launcherConstants.AMP_LAUNCH_P);
+    m_leftPidController.setI(Constants.launcherConstants.AMP_LAUNCH_I);
+    m_leftPidController.setD(Constants.launcherConstants.AMP_LAUNCH_D);
+    m_leftPidController.setIZone(Constants.launcherConstants.AMP_LAUNCH_IZONE);
+    m_leftPidController.setFF(Constants.launcherConstants.AMP_FEEDFORWARD);
+    m_leftPidController.setReference(Constants.launcherConstants.AMP_VELOCITY * -1, CANSparkMax.ControlType.kVelocity);
   }
 
   public void stopLauncher(){

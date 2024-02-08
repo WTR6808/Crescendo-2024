@@ -93,6 +93,8 @@ public class RobotContainer {
     //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : ) 
 m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
 //m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
+m_operatorController.b().whileTrue(new InstantCommand(()->m_launcher.reverseLauncher(),m_launcher));
+m_operatorController.b().whileFalse(new InstantCommand(()-> m_launcher.stopLauncher(),m_launcher));
 
 m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
     

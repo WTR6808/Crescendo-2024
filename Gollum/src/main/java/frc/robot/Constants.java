@@ -136,7 +136,7 @@ public final class Constants {
     public static final double TURN_D  = 0.0;
   }
 
-  public class launcherConstants {
+  public static class launcherConstants {
 
     public static final double LAUNCHER_REDUCTION = 1.0;
     public static final double LAUNCH_VELOCITY_CONVERSION = (Measurements.WHEEL_DIAMETER * Math.PI * LAUNCHER_REDUCTION)/60.0;
@@ -155,25 +155,34 @@ public final class Constants {
     public static final double SPEAKER_LAUNCH_D     =    0.0;
     public static final double SPEAKER_LAUNCH_IZONE =    0.0;
     public static final double SPEAKER_FEEDFORWARD  =    0.00017; //0.00125/4.0;
-    public static final double SPEAKER_VELOCITY     = 5800.0; //5500;
+    public static final double SPEAKER_VELOCITY     =    5800.0; //5500;
 
     public static final double AMP_LAUNCH_P         =    0.0001;
     public static final double AMP_LAUNCH_I         =    0.0;
     public static final double AMP_LAUNCH_D         =    0.0;
     public static final double AMP_LAUNCH_IZONE     =    0.0;
     public static final double AMP_FEEDFORWARD      =    0.00017;
-    public static final double AMP_VELOCITY         = 800.0;
+    public static final double AMP_VELOCITY         =    800.0;
     //TODO find velocity constants for launcher
+    
 
     //Make Flipper Constansts
     public static final double LEFT_UP            = 0.0;
-    public static final double RIGHT_UP            = 0.17;
+    public static final double RIGHT_UP           = 0.17;
 
-    public static final double LEFT_DOWN            = 0.17;
-    public static final double RIGHT_DOWN            = 0.0;
+    public static final double LEFT_DOWN          = 0.17;
+    public static final double RIGHT_DOWN         = 0.0;
 
     //Make Command Constants
-    public static final double VELOCITY_TOLERANCE    = 100.0;
-    public static final int FLIP_VWOOP_TIME          = 60;
+    public static final double VELOCITY_TOLERANCE  = 100.0;
+    public static final int FLIP_VWOOP_TIME        = 60;
+  }
+
+  public static class Limelight_Constants {
+    public static final int DEFAULT_PIPELINE   = 0;
+    public static final int SPEAKER_PIPELINE_B = 1;
+    public static final int SPEAKER_PIPELINE_R = 2;
+    public static final int AMP_PIPELINE       = 3;
+    public static final int SOURCE_PIPELINE    = 4;
   }
 }
