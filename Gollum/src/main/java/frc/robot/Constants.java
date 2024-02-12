@@ -185,4 +185,9 @@ public final class Constants {
     public static final int AMP_PIPELINE       = 3;
     public static final int SOURCE_PIPELINE    = 4;
   }
+
+  public static class LED_Constants {
+    public static final int LED_ROBORIO_PWM_HEADER = 1;
+    public static final int LED_LENGTH = 150; // 30 per meter, 5 meters. 5*30 = 150;
+  }
 }
