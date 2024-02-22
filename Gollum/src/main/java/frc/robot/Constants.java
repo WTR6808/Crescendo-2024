@@ -19,7 +19,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final double DEADZONE = 0.05;
+    public static final double DEADZONE = 0.3;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
@@ -30,6 +30,7 @@ public final class Constants {
   public static class Measurements {
     public static final double TRACK_WIDTH    = Units.inchesToMeters(22.50);
     public static final double WHEEL_BASE     = Units.inchesToMeters(22.25);
+    public static final double RADIUS = Math.sqrt(TRACK_WIDTH*TRACK_WIDTH + WHEEL_BASE*WHEEL_BASE) /  2;
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
 
     public static final double ROBOT_MAX_LINEAR_VELOCITY  = 5620.0/60.0 *
@@ -54,31 +55,31 @@ public final class Constants {
     public static final int FRONT_RIGHT_ENCODER_CAN_ID     = 13;
     public static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
     public static final boolean FRONT_RIGHT_TURN_INVERTED  = false;
-    public static final double FRONT_RIGHT_OFFSET           = -0.280;//-0.338; //0.489//-0.385
+    public static final double FRONT_RIGHT_OFFSET          = 0.136;//-0.280;//-0.338; //0.489//-0.385
 
     public static final int BACK_RIGHT_DRIVE_CANID         = 21;
     public static final int BACK_RIGHT_TURN_CANID          = 22;
     public static final int BACK_RIGHT_ENCODER_CAN_ID      = 23;
     public static final boolean BACK_RIGHT_DRIVE_INVERTED  = false;
     public static final boolean BACK_RIGHT_TURN_INVERTED   = false;
-    public static final double BACK_RIGHT_OFFSET           = -0.439;//0.480;//-0.43;//-0.454
+    public static final double BACK_RIGHT_OFFSET           = -0.176;//-0.439;//0.480;//-0.43;//-0.454
 
     public static final int BACK_LEFT_DRIVE_CANID          = 31;
     public static final int BACK_LEFT_TURN_CANID           = 32;
     public static final int BACK_LEFT_ENCODER_CAN_ID       = 33;
     public static final boolean BACK_LEFT_DRIVE_INVERTED   = true;
     public static final boolean BACK_LEFT_TURN_INVERTED    = false;
-    public static final double BACK_LEFT_OFFSET           = 0.181;//0.214; //0.171//0.208
+    public static final double BACK_LEFT_OFFSET           = 0.078;//0.181;//0.214; //0.171//0.208
 
     public static final int FRONT_LEFT_DRIVE_CANID         = 41;
     public static final int FRONT_LEFT_TURN_CANID          = 42;
     public static final int FRONT_LEFT_ENCODER_CAN_ID      = 43;
     public static final boolean FRONT_LEFT_DRIVE_INVERTED  = true;
     public static final boolean FRONT_LEFT_TURN_INVERTED   = false;
-    public static final double FRONT_LEFT_OFFSET           = 0.320; //0.341;//0.300; //.260//0.294
+    public static final double FRONT_LEFT_OFFSET           = -0.474;// 0.320; //0.341;//0.300; //.260//0.294
 
     //CANID's for intake motors
-    public static final int FRONT_RIGHT_INTAKE_CANID       = 51;
+    /*public static final int FRONT_RIGHT_INTAKE_CANID       = 51;
     public static final int BACK_RIGHT_INTAKE_CANID        = 52;
     public static final int BACK_LEFT_INTAKE_CANID         = 53;
     public static final int FRONT_LEFT_INTAKE_CANID        = 54;
@@ -86,6 +87,9 @@ public final class Constants {
     public static final boolean BACK_RIGHT_INTAKE_INVERTED   = false;
     public static final boolean BACK_LEFT_INTAKE_INVERTED    = false;
     public static final boolean FRONT_LEFT_INTAKE_INVERTED   = false;
+*/
+
+
 
     //Robot Kinematic Constants
     public static final SwerveDriveKinematics DRIVE_KINEMATICS =
@@ -97,7 +101,19 @@ public final class Constants {
         );
   }
 
+  public static class Climber{
+    
+     //Make Climber Constansts 
+    public static final int RIGHT_CLIMBER_CANID            = 51;
+    public static final int LEFT_CLIMBER_CANID             = 52;
+    public static final boolean RIGHT_CLIMBER_INVERTED     = false;
+      public static final boolean LEFT_CLIMBER_INVERTED    = true;
+      public static final double CLIMB_SPEED               = 800;
+  }
+
   public static class SDSModuleConstants {
+    public static final double MAX_VOLTS = 12;//placeholder
+
     public static final double MK4_L3_DRIVE_REDUCTION = (14.0 / 50.0) * (28.0 / 16.0) * (15.0 / 45.0);
     public static final double MK4_L3_TURN_REDUCTION  = (15.0 / 32.0) * (10.0 / 60.0);
     public static final boolean MK4_L3_DRIVE_INVERTED = true;

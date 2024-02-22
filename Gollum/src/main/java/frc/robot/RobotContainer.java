@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.LaunchAmp;
 import frc.robot.commands.LaunchSpeaker;
+import frc.robot.subsystems.Candy_Cane;
 import frc.robot.subsystems.IT_IS_A_LAUNCHER;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   SwerveDriveSubsystem m_swerve = SwerveDriveSubsystem.Instance();
   IT_IS_A_LAUNCHER m_launcher = IT_IS_A_LAUNCHER.Instance();
+  Candy_Cane m_Candy_Cane = Candy_Cane.Instance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -98,7 +100,8 @@ m_operatorController.b().whileFalse(new InstantCommand(()-> m_launcher.stopLaunc
 
 m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
     
-
+m_operatorController.povUp().onTrue(new InstantCommand(()->m_Candy_Cane.climberUp(),m_Candy_Cane));
+m_operatorController.povDown().onTrue(new InstantCommand(()->m_Candy_Cane.climberDown(),m_Candy_Cane));
 
   }
 
