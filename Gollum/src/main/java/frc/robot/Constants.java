@@ -19,7 +19,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final double DEADZONE = 0.3;
+    public static final double DEADZONE = 0.05;//0.3;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
@@ -107,7 +107,7 @@ public final class Constants {
     public static final int RIGHT_CLIMBER_CANID            = 51;
     public static final int LEFT_CLIMBER_CANID             = 52;
     public static final boolean RIGHT_CLIMBER_INVERTED     = false;
-      public static final boolean LEFT_CLIMBER_INVERTED    = true;
+      public static final boolean LEFT_CLIMBER_INVERTED    = false;
       public static final double CLIMB_SPEED               = 800;
   }
 
@@ -147,7 +147,7 @@ public final class Constants {
     public static final double DRIVE_I = 0.0;
     public static final double DRIVE_D = 0.0005;
 
-    public static final double TURN_P  = 0.6;
+    public static final double TURN_P  = 0.5;
     public static final double TURN_I  = 0.0;
     public static final double TURN_D  = 0.0;
   }
@@ -200,10 +200,12 @@ public final class Constants {
     public static final int SPEAKER_PIPELINE_R = 2;
     public static final int AMP_PIPELINE       = 3;
     public static final int SOURCE_PIPELINE    = 4;
+    public static final int RED_AUTO_PIPELINE  = 6;
+    public static final int BLUE_AUTO_PIPELINE = 7;
   }
 
   public static class LED_Constants {
-    public static final int LED_ROBORIO_PWM_HEADER = 1;
+    public static final int LED_ROBORIO_PWM_HEADER = 3;
     public static final int LED_LENGTH = 150; // 30 per meter, 5 meters. 5*30 = 150;
   }
 }

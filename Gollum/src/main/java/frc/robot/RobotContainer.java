@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.LaunchAmp;
 import frc.robot.commands.LaunchSpeaker;
 import frc.robot.subsystems.Candy_Cane;
@@ -32,8 +33,8 @@ public class RobotContainer {
   Candy_Cane m_Candy_Cane = Candy_Cane.Instance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  //private final CommandXboxController m_driverController =
+  //    new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
   private final Joystick m_Joystick = 
       new Joystick(OperatorConstants.DRIVER_CONTROLLER_PORT);
   private final CommandXboxController m_operatorController =
@@ -65,12 +66,17 @@ public class RobotContainer {
                     */
                     true),
                 m_swerve));
+
     SmartDashboard.putData("Reset Encoders", new InstantCommand(()->m_swerve.resetEncoders(), m_swerve));
     SmartDashboard.putData("Reset Gyro (Pigeon2)", new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve));
-    SmartDashboard.putData("Run Launcher Speaker", new InstantCommand(()->m_launcher.launchSpeaker(), m_launcher));
-    SmartDashboard.putData("Run Launcher Amp", new InstantCommand(()->m_launcher.launchAmp(), m_launcher));
+    SmartDashboard.putData("Run Launcher Speaker", new LaunchSpeaker(m_launcher));
+    SmartDashboard.putData("Run Launcher Amp", new LaunchAmp(m_launcher));
     SmartDashboard.putData("Stop Launcher", new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
     SmartDashboard.putData("Run Launcher Reverse", new InstantCommand(()->m_launcher.reverseLauncher(), m_launcher));
+    SmartDashboard.putData("Test Drive to Target",new DriveToTarget(m_swerve));
+    SmartDashboard.putData("Stop Climber", new InstantCommand(()->m_Candy_Cane.stopClimber(),m_Candy_Cane));
+    SmartDashboard.putData("Take Snap Shot", new InstantCommand(()->m_swerve.takeSnapShot(),m_swerve));
+
   }
 
   /**
@@ -93,15 +99,15 @@ public class RobotContainer {
     final JoystickButton DriverResetGyro = new JoystickButton(m_Joystick, Constants.Buttons.BUTTON_RESET_GYRO);
     DriverResetGyro.onTrue(new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve)); 
     //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : ) 
-m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
-//m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
-m_operatorController.b().whileTrue(new InstantCommand(()->m_launcher.reverseLauncher(),m_launcher));
-m_operatorController.b().whileFalse(new InstantCommand(()-> m_launcher.stopLauncher(),m_launcher));
+    m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
+    //m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
+    m_operatorController.b().whileTrue(new InstantCommand(()->m_launcher.reverseLauncher(),m_launcher));
+    m_operatorController.b().whileFalse(new InstantCommand(()-> m_launcher.stopLauncher(),m_launcher));
 
-m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
+    m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
     
-m_operatorController.povUp().onTrue(new InstantCommand(()->m_Candy_Cane.climberUp(),m_Candy_Cane));
-m_operatorController.povDown().onTrue(new InstantCommand(()->m_Candy_Cane.climberDown(),m_Candy_Cane));
+    m_operatorController.povUp().onTrue(new InstantCommand(()->m_Candy_Cane.climberDown(),m_Candy_Cane));
+    m_operatorController.povDown().onTrue(new InstantCommand(()->m_Candy_Cane.climberUp(),m_Candy_Cane));
 
   }
 

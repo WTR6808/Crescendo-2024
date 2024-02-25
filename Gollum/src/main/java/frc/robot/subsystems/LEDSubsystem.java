@@ -24,11 +24,17 @@ public class LEDSubsystem extends SubsystemBase {
         return m_instance;
     }
 
-    private void LEDSubsystem() {
+    private LEDSubsystem() {
         // Create LEDS class
         m_leds = new AddressableLED(Constants.LED_Constants.LED_ROBORIO_PWM_HEADER);
+        // Set length to LEDS
+        m_leds.setLength(Constants.LED_Constants.LED_LENGTH);
         // Create buffer for LEDS
         m_ledBuffer = new AddressableLEDBuffer(Constants.LED_Constants.LED_LENGTH);
+
+        // Turn on color IE. Purple
+        setAllColors(255, 0, 255);
+
         // Set the buffer
         m_leds.setData(m_ledBuffer);
         // Turn on the LEDS
@@ -89,4 +95,13 @@ public class LEDSubsystem extends SubsystemBase {
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
       }
+
+    @Override
+    public void periodic() {
+        // Updates the rainbow effect, remove to customize the leds
+        rainbow();
+
+        // Should stay here unless periodic is completly unused. 
+        updateColors();
+    } 
 }

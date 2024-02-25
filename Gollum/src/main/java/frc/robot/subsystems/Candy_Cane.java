@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -39,16 +38,16 @@ public class Candy_Cane extends SubsystemBase {
     m_rightClimber.setInverted(Constants.Climber.RIGHT_CLIMBER_INVERTED);
     m_leftClimber.setSmartCurrentLimit(60);
     m_rightClimber.setSmartCurrentLimit(60);
-    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-    m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 200);
-    m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
-    m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 180);
-    m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
-
-    m_leftClimber.follow(m_rightClimber);
+    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+    //m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 200);
+    //m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
+    //m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 0);
+    //m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 180);
+    resetEncoders();
+    //m_leftClimber.follow(m_rightClimber);
   }
 
   public void resetEncoders(){
@@ -57,11 +56,13 @@ public class Candy_Cane extends SubsystemBase {
   }
 
 public void climberUp(){
-    m_rightClimber.set(-0.5);
+    m_rightClimber.set(-0.25);
+    m_leftClimber.set(0.25);
 }
 
 public void climberDown(){
-  m_rightClimber.set(0.5);
+  m_rightClimber.set(0.25);
+  m_leftClimber.set(-0.25);
 }
 
 public void stopClimber(){

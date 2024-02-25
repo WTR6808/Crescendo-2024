@@ -89,6 +89,10 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     //m_turnEncoder.setPosition(0.0);
   }
 
+  public double getDriveDistance(){
+    return m_driveEncoder.getPosition();
+  }
+
   //TODO Replace this routine for Actual Swerve
   public void setDesiredState(SwerveModuleState desiredState){
     double driveOutput, turnOutput;

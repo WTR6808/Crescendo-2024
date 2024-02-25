@@ -79,6 +79,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 //    SmartDashboard.putNumber("Turn I", Constants.SDSModuleConstants.TURN_I);
 //    SmartDashboard.putNumber("Turn D", Constants.SDSModuleConstants.TURN_D);
   }
+  public void stop (){
+    drive (0,0,0,false);
+  }
 
   public void drive (double x, double y, double rot, boolean fieldRelative){
     ChassisSpeeds speeds;
@@ -114,11 +117,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     m_backRight.setDesiredState  (swerveModuleStates[3]);                                                
   }
 
+  //Drive encoder routines
+  //Sets Drive Encoder Position to 0
   public void resetEncoders() {
     m_frontLeft.resetEncoders();
     m_backLeft.resetEncoders();
     m_frontRight.resetEncoders();
     m_backRight.resetEncoders();
+  }
+
+  public double getAvgDistance(){
+    return ((m_frontLeft.getDriveDistance() +
+             m_backLeft.getDriveDistance() +
+             m_frontRight.getDriveDistance() +
+             m_backRight.getDriveDistance()) / 4.0);
   }
 
   @Override
@@ -131,6 +143,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Voltage", voltage);
 
     SmartDashboard.putNumber("Gyro", m_pigeon.getAngle().getDegrees());
+    
+    //SmartDashboard.putNumber("TY", m_limelight.distanceError());
+    //SmartDashboard.putNumber("TX", m_limelight.steerError());
+
+    //writeLLData();
   }
 
   private double smoother_input(double d) {
@@ -141,12 +158,42 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     //return Math.signum(d) * ((Math.pow(d, 2)+ Math.pow(d, 4)) / 2);
   }
 
+  //Gyro Commands
+  //Set the Heading to 0.0 degrees
   public void reset_pigeon2() {
     m_pigeon.reset();
-  } 
+  }
+  
+  //Set the Heading to the provided degrees
+  public void setPigeon2Angle(double deg){
+    m_pigeon.setAngle(deg);
+  }
+
+  public double getPigeonHeading(){
+    return m_pigeon.get360Angle();
+  }
+
+  //Exposed Limelight Commands
+  public boolean targetAcquired(){
+    return m_limelight.targetAcquired();
+  }
+
+  public void takeSnapShot(){
+    m_limelight.takeSnapShot();
+  }
+
+  public void initAutoDriveToTarget(){
+    this.stop();
+    m_limelight.InitializeAutonTracking();
+  }
 
   public void initDriveToTarget(){
+    this.stop();
     m_limelight.initializeTargetTracking();
+  }
+
+  public void setPipeline(int p){
+    m_limelight.setPipeline(p);
   }
 
   public void stopDriveToTarget(){
@@ -175,15 +222,4 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
     return valid;
   }
-
-  //TODO Need to add following methods Driving to Target with Limelight:
-  //    At beginning create instance of LimelightTwo
-  //    Add Methods for the following:
-  //      void stopDriving() -- stops the bot
-  //      bool startTracking() -- will need to get TagId from Limelight and set Pipeline accordingly
-  //                               need to handle case of no TagId at initializtion
-  //      bool driveToTarget() -- will need to get TagId from Limelight if one wasn't found at initialization
-  //                                check for aborted command (i.e., stopDriveToTarget was called)
-  //                                call drive with Limelight values in robot centric mode
-  //      void stopDriveToTarget() -- Turn LEDs off force driveToTarget to return false;
 }

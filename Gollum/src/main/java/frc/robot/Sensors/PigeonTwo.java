@@ -119,7 +119,7 @@ public class PigeonTwo {
 
     public double get360Angle(){
         //return m_pigeon2.getYaw().refresh().getValueAsDouble() % 360.0;
-        return m_pigeon2.getAngle() % 360.0;
+        return -m_pigeon2.getAngle() % 360.0;
     }
 
     public StatusCode setAngle(double degrees){
@@ -127,7 +127,7 @@ public class PigeonTwo {
     }
 
     public StatusCode reset(){
-        return setAngle(0.0);
+        return setAngle(0);
     }
 
     public void getGravityVector(){
