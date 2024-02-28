@@ -16,42 +16,42 @@ import frc.robot.Sensors.PigeonTwo;
 public class SwerveDriveSubsystem extends SubsystemBase {
   private static SwerveDriveSubsystem instance = null;
 
-    //Create the four Swerve Modules
-    private final MK4_L3_SwerveModule m_frontLeft =
-      new MK4_L3_SwerveModule("Left Front", 
-                              Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_CANID,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_TURN_CANID,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID,
-                              Constants.SwerveDriveConstants.FRONT_LEFT_OFFSET);         
+  //Create the four Swerve Modules
+  private final MK4_L3_SwerveModule m_frontLeft =
+    new MK4_L3_SwerveModule("Left Front", 
+                            Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_CANID,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_TURN_CANID,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_TURN_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_OFFSET);         
 
   private final MK4_L3_SwerveModule m_frontRight =
-      new MK4_L3_SwerveModule("Right Front", 
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_CANID,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_CANID,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID,
-                              Constants.SwerveDriveConstants.FRONT_RIGHT_OFFSET);         
+    new MK4_L3_SwerveModule("Right Front", 
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_CANID,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_CANID,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_OFFSET);         
 
   private final MK4_L3_SwerveModule m_backRight =
-      new MK4_L3_SwerveModule("Right Back", 
-                              Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_CANID,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_TURN_CANID,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID,
-                              Constants.SwerveDriveConstants.BACK_RIGHT_OFFSET); 
+    new MK4_L3_SwerveModule("Right Back", 
+                            Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_CANID,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_TURN_CANID,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_TURN_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_OFFSET); 
 
   private final MK4_L3_SwerveModule m_backLeft =
-      new MK4_L3_SwerveModule("Left Back", 
-                              Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_CANID,
-                              Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_LEFT_TURN_CANID,
-                              Constants.SwerveDriveConstants.BACK_LEFT_TURN_INVERTED,
-                              Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
-                              Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
+    new MK4_L3_SwerveModule("Left Back", 
+                            Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_CANID,
+                            Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_LEFT_TURN_CANID,
+                            Constants.SwerveDriveConstants.BACK_LEFT_TURN_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
+                            Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
                             
   //Create CTRE Pigeon 2
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
@@ -126,6 +126,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     m_backRight.resetEncoders();
   }
 
+  //Returns the average of the Drive Encoder Distances in Meters
   public double getAvgDistance(){
     return ((m_frontLeft.getDriveDistance() +
              m_backLeft.getDriveDistance() +
@@ -150,6 +151,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     //writeLLData();
   }
 
+  //Formula by Sergey to smooth out the driving inputs
   private double smoother_input(double d) {
     if (d==0) {
       return 0;
@@ -158,12 +160,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     //return Math.signum(d) * ((Math.pow(d, 2)+ Math.pow(d, 4)) / 2);
   }
 
-  //Gyro Commands
+  //Exposed Gyro Commands
   //Set the Heading to 0.0 degrees
   public void reset_pigeon2() {
     m_pigeon.reset();
   }
-  
+
   //Set the Heading to the provided degrees
   public void setPigeon2Angle(double deg){
     m_pigeon.setAngle(deg);

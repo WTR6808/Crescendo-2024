@@ -19,7 +19,18 @@
       "/SmartDashboard/Run Launchers": "Command",
       "/SmartDashboard/Stop Climber": "Command",
       "/SmartDashboard/Stop Launcher": "Command",
+      "/SmartDashboard/Take Snap Shot": "Command",
+      "/SmartDashboard/Test Drive Distance (1.5 feet)": "Command",
+      "/SmartDashboard/Test Drive to Auto Target": "Command",
       "/SmartDashboard/Test Drive to Target": "Command"
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "Retained Values": {
+      "open": false
     }
   },
   "NetworkTables Info": {
@@ -33,6 +44,12 @@
       "open": true
     },
     "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
       "open": true
     },
     "visible": true

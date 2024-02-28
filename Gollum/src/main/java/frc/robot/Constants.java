@@ -48,8 +48,10 @@ public final class Constants {
   public static class SwerveDriveConstants {
     //CANID for Pigeon IMU
     public static final int PIGEON_CANID = 0;
-
-    //CANID's for Swerve Motors & CANCoders
+    //Pigeon reset Angle for Autonomous. Assumes front alignment with Red/Blue Amp
+    public static final double PIGEON_AUTO_FIELD_CENTRIC_ANGLE = -90.0; //degrees
+    
+    //CANID's for Swerve Motors & CANCoders, Invert Settings and Turning Encoder Offsets
     public static final int FRONT_RIGHT_DRIVE_CANID        = 11;
     public static final int FRONT_RIGHT_TURN_CANID         = 12;
     public static final int FRONT_RIGHT_ENCODER_CAN_ID     = 13;
@@ -205,7 +207,7 @@ public final class Constants {
   }
 
   public static class LED_Constants {
-    public static final int LED_ROBORIO_PWM_HEADER = 3;
+    public static final int LED_ROBORIO_PWM_HEADER = 2;
     public static final int LED_LENGTH = 150; // 30 per meter, 5 meters. 5*30 = 150;
   }
 }

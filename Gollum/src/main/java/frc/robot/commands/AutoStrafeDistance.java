@@ -20,6 +20,7 @@ public class AutoStrafeDistance extends Command {
 
   private NetworkTable FMSInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
   private NetworkTableEntry IsRedAlliance  = FMSInfo.getEntry("IsRedAlliance");
+
   /** Creates a new StrafeDistance. */
   public AutoStrafeDistance(SwerveDriveSubsystem swerve, double dist) {
     m_distance = dist;

@@ -5,6 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoDriveToSpeaker;
+import frc.robot.commands.AutoSearchForAmp;
+import frc.robot.commands.AutoStrafeDistance;
+//import frc.robot.commands.ClimberDown;
+//import frc.robot.commands.ClimberUp;
+import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.LaunchAmp;
 import frc.robot.commands.LaunchSpeaker;
@@ -76,7 +82,12 @@ public class RobotContainer {
     SmartDashboard.putData("Test Drive to Target",new DriveToTarget(m_swerve));
     SmartDashboard.putData("Stop Climber", new InstantCommand(()->m_Candy_Cane.stopClimber(),m_Candy_Cane));
     SmartDashboard.putData("Take Snap Shot", new InstantCommand(()->m_swerve.takeSnapShot(),m_swerve));
-
+    SmartDashboard.putData("Test Drive to Auto Target",new AutoDriveToSpeaker(m_swerve));
+    
+    SmartDashboard.putData("Test Auto Drive to Speaker",new AutoDriveToSpeaker(m_swerve));
+    SmartDashboard.putData("Test Drive Distance (1.5 feet)",new DriveDistance(m_swerve, 18));
+    SmartDashboard.putData("Test Strafe Distance (2 feet)", new AutoStrafeDistance(m_swerve, 24));
+    SmartDashboard.putData("Test Search for Amp", new AutoSearchForAmp(m_swerve));
   }
 
   /**
@@ -89,26 +100,41 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(m_exampleSubsystem::exampleCondition)
-    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //*****************Driver Joystick Button Assignments**********************
+    //DriverResetGyro Zeroes the Gyro as is intended for the Driver to calibrate Field Centric Operation 
     final JoystickButton DriverResetGyro = new JoystickButton(m_Joystick, Constants.Buttons.BUTTON_RESET_GYRO);
-    DriverResetGyro.onTrue(new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve)); 
-    //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : ) 
-    m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
-    //m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
-    m_operatorController.b().whileTrue(new InstantCommand(()->m_launcher.reverseLauncher(),m_launcher));
-    m_operatorController.b().whileFalse(new InstantCommand(()-> m_launcher.stopLauncher(),m_launcher));
-
-    m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
+    DriverResetGyro.onTrue(new InstantCommand(()->m_swerve.reset_pigeon2(), m_swerve));
     
-    m_operatorController.povUp().onTrue(new InstantCommand(()->m_Candy_Cane.climberDown(),m_Candy_Cane));
-    m_operatorController.povDown().onTrue(new InstantCommand(()->m_Candy_Cane.climberUp(),m_Candy_Cane));
+    //DriveToApril aligns the robot to the desired launching position based on the currently detected April Tag
+    final JoystickButton DriveToApril = new JoystickButton(m_Joystick, 1);
+    DriveToApril.onTrue(new DriveToTarget(m_swerve));
 
+    //*****************Operator Controller Button Assignments**********************
+    //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : )
+    //Left and Right Bumpers launch a note into the Amp or Speaker respectively
+    m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
+    m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
+    //m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
+
+    //B when pressed runs the launcher in reverse to receive a Note from the Source and stops when released
+    m_operatorController.b().whileTrue(new InstantCommand(()->m_launcher.reverseLauncher(),m_launcher))
+                            .onFalse(new InstantCommand(()-> m_launcher.stopLauncher(),m_launcher));
+
+    //POV Up while true will raise the climber arms (lower robot) and stop when released
+    //OPERATOR IS RESPONSIBLE FOR STOPPING BY RELEASING THE POV BUTTON
+    m_operatorController.povUp().whileTrue(new InstantCommand(()->m_Candy_Cane.climberUp(), m_launcher))
+                                .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
+    //POV Down while true will lower the climber arms (lift robot) and stop when released
+    //OPERATOR IS RESPONSIBLE FOR STOPPING BY RELEASING THE POV BUTTON
+    m_operatorController.povDown().whileTrue(new InstantCommand(()->m_Candy_Cane.climberDown(), m_launcher))
+                                  .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
+
+    //Commented POV Commands Below have safety stops in them to prevent over
+    //tightening the ropes.  Had problems 2/26 with encoder positions not being
+    //reliable, so replaced with above.  If we can figure out encoder issues,
+    //go back to these routines.
+    //m_operatorController.povUp().onTrue(new ClimberUp(m_Candy_Cane));
+    //m_operatorController.povDown().onTrue(new ClimberDown(m_Candy_Cane));
   }
 
   /**

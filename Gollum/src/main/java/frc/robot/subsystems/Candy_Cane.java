@@ -8,6 +8,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -38,31 +39,37 @@ public class Candy_Cane extends SubsystemBase {
     m_rightClimber.setInverted(Constants.Climber.RIGHT_CLIMBER_INVERTED);
     m_leftClimber.setSmartCurrentLimit(60);
     m_rightClimber.setSmartCurrentLimit(60);
-    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
-    m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
-    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
-    m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
-    //m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 200);
+    //m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    //m_rightClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    //m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    //m_leftClimber.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    //m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, -133);
     //m_rightClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
     //m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 0);
-    //m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 180);
+    //m_leftClimber.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse,133);
     resetEncoders();
     //m_leftClimber.follow(m_rightClimber);
   }
+  public double getRightEncoderPos(){
+    return m_rightClimberEncoder.getPosition();
+  }
 
+  public double getLeftEncoderPos(){
+    return m_leftClimberEncoder.getPosition();
+  }
   public void resetEncoders(){
     m_leftClimberEncoder.setPosition(0);
     m_rightClimberEncoder.setPosition(0);
   }
 
 public void climberUp(){
-    m_rightClimber.set(-0.25);
-    m_leftClimber.set(0.25);
+    m_rightClimber.set(0.25);
+    m_leftClimber.set(-0.25);
 }
 
 public void climberDown(){
-  m_rightClimber.set(0.25);
-  m_leftClimber.set(-0.25);
+  m_rightClimber.set(-0.25);
+  m_leftClimber.set(0.25);
 }
 
 public void stopClimber(){
@@ -73,5 +80,7 @@ public void stopClimber(){
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Climber Left Encoder ", m_leftClimberEncoder.getPosition());
+    SmartDashboard.putNumber("Climber Right Encoder ", m_rightClimberEncoder.getPosition());
   }
 }

@@ -10,7 +10,6 @@ import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -34,10 +33,10 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   /*private final PIDController m_drivePID = new PIDController(Constants.SDSModuleConstants.DRIVE_P,
                                                              Constants.SDSModuleConstants.DRIVE_I,
                                                              Constants.SDSModuleConstants.DRIVE_D); */
-    private SparkPIDController m_drivePID;/*= new SparkPIDController(Constants.SDSModuleConstants.DRIVE_P,
-                                                                  Constants.SDSModuleConstants.DRIVE_I,
-                                                                  Constants.SDSModuleConstants.DRIVE_D);
-  */
+  //  private SparkPIDController m_drivePID;/*= new SparkPIDController(Constants.SDSModuleConstants.DRIVE_P,
+  //                                                                Constants.SDSModuleConstants.DRIVE_I,
+  //                                                                Constants.SDSModuleConstants.DRIVE_D);
+  
   //FIXME Change to Profiled PID Controller after initial tuning?
   private final PIDController m_turnPID = new PIDController(Constants.SDSModuleConstants.TURN_P,
                                                             Constants.SDSModuleConstants.TURN_I,

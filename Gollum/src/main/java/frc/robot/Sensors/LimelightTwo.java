@@ -70,8 +70,8 @@ public class LimelightTwo {
     private int m_failureCount = 0;
     private int m_pipeline = 0;
 
-	private PIDController m_drivePID = new PIDController(1.0/TY_MAX, 0.0, 0.0);
-	private PIDController m_steerPID = new PIDController(1.0/TX_MAX, 0.0, 0.0);
+	private PIDController m_drivePID = new PIDController(2.5/TY_MAX, 0.0, 0.0);
+	private PIDController m_steerPID = new PIDController(2.5/TX_MAX, 0.0, 0.0);
 
     //Uncomment for Debug Purposes in Simulation
     //private double distErr = TY_MAX/5.0;
@@ -157,7 +157,7 @@ public class LimelightTwo {
         snap.setInteger(0);
         snap.setInteger(1);
     }
-    
+
     public void setLEDs(boolean on){
         //Value of 0 LEDs us Pipeline, 1 turns LEDs off
         if (on){
@@ -201,7 +201,7 @@ public class LimelightTwo {
         m_trackingStarted = true;
         m_targetLosses = 0;
         m_failureCount = 0;
-        SmartDashboard.putBoolean("Red Alliance", IsRedAlliance.getBoolean(false));
+        //SmartDashboard.putBoolean("Red Alliance", IsRedAlliance.getBoolean(false));
     }
 
     public void InitializeAutonTracking(){
