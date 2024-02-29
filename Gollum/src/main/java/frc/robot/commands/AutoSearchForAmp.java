@@ -16,7 +16,7 @@ public class AutoSearchForAmp extends Command {
   private SwerveDriveSubsystem m_swerve;
   private NetworkTable FMSInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
   private NetworkTableEntry IsRedAlliance  = FMSInfo.getEntry("IsRedAlliance");
-
+  private int m_desiredTagId = 0;
   public AutoSearchForAmp(SwerveDriveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_swerve = swerve;
@@ -31,9 +31,11 @@ public class AutoSearchForAmp extends Command {
     m_swerve.reset_pigeon2();
     m_swerve.setPipeline(Constants.Limelight_Constants.AMP_PIPELINE);
     if (IsRedAlliance.getBoolean(false)){
-      m_swerve.drive(0, 0, 0.3, false);
+      m_swerve.drive(0, 0, 0.5, false);
+      m_desiredTagId = 5;
     } else {
-      m_swerve.drive(0, 0, -0.3, false);
+      m_swerve.drive(0, 0, -0.5, false);
+      m_desiredTagId = 6;
     }
   }
 
@@ -50,6 +52,6 @@ public class AutoSearchForAmp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_swerve.targetAcquired() || Math.abs(m_swerve.getPigeonHeading()) >= 360.0);
+    return ((m_swerve.targetAcquired() && m_swerve.targetID() == m_desiredTagId));// || Math.abs(m_swerve.getPigeonHeading()) > 360.0);
   }
 }

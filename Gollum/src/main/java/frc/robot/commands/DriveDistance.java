@@ -12,7 +12,7 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class DriveDistance extends Command {
   private SwerveDriveSubsystem m_swerve;
-  private double m_distance = 0;
+  private double m_distance = 0.0;
   private PIDController distancePID = new PIDController(1,0,0);
 
   /** Creates a new DriveDistance. */
@@ -35,7 +35,7 @@ public class DriveDistance extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()),-0.7,0.7);
+    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()),-0.9,0.9);
     if (!distancePID.atSetpoint()){
       if (Math.abs(s)<0.4){
         s=Math.signum(s)*0.4;

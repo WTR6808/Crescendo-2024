@@ -21,6 +21,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     new MK4_L3_SwerveModule("Left Front", 
                             Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_CANID,
                             Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_LEFT_DRIVE_ENCODER_INVERTED,
                             Constants.SwerveDriveConstants.FRONT_LEFT_TURN_CANID,
                             Constants.SwerveDriveConstants.FRONT_LEFT_TURN_INVERTED,
                             Constants.SwerveDriveConstants.FRONT_LEFT_ENCODER_CAN_ID,
@@ -30,6 +31,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     new MK4_L3_SwerveModule("Right Front", 
                             Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_CANID,
                             Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.FRONT_RIGHT_DRIVE_ENCODER_INVERTED,
                             Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_CANID,
                             Constants.SwerveDriveConstants.FRONT_RIGHT_TURN_INVERTED,
                             Constants.SwerveDriveConstants.FRONT_RIGHT_ENCODER_CAN_ID,
@@ -39,6 +41,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     new MK4_L3_SwerveModule("Right Back", 
                             Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_CANID,
                             Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_RIGHT_DRIVE_ENCODER_INVERTED,
                             Constants.SwerveDriveConstants.BACK_RIGHT_TURN_CANID,
                             Constants.SwerveDriveConstants.BACK_RIGHT_TURN_INVERTED,
                             Constants.SwerveDriveConstants.BACK_RIGHT_ENCODER_CAN_ID,
@@ -48,6 +51,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     new MK4_L3_SwerveModule("Left Back", 
                             Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_CANID,
                             Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_INVERTED,
+                            Constants.SwerveDriveConstants.BACK_LEFT_DRIVE_ENCODER_INVERTED,
                             Constants.SwerveDriveConstants.BACK_LEFT_TURN_CANID,
                             Constants.SwerveDriveConstants.BACK_LEFT_TURN_INVERTED,
                             Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
@@ -128,6 +132,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   //Returns the average of the Drive Encoder Distances in Meters
   public double getAvgDistance(){
+    SmartDashboard.putNumber("Font Left Encoder: ", m_frontLeft.getDriveDistance());
+    SmartDashboard.putNumber("Font Right Encoder: ", m_frontRight.getDriveDistance());
+    SmartDashboard.putNumber("Back Left Encoder: ", m_backLeft.getDriveDistance());
+    SmartDashboard.putNumber("Back Right Encoder: ", m_backRight.getDriveDistance());
     return ((m_frontLeft.getDriveDistance() +
              m_backLeft.getDriveDistance() +
              m_frontRight.getDriveDistance() +
@@ -144,11 +152,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Voltage", voltage);
 
     SmartDashboard.putNumber("Gyro", m_pigeon.getAngle().getDegrees());
+    m_limelight.periodic(true);
     
-    //SmartDashboard.putNumber("TY", m_limelight.distanceError());
-    //SmartDashboard.putNumber("TX", m_limelight.steerError());
-
-    //writeLLData();
+    //Added for debugging drive/strafe distance routines
+    getAvgDistance();
   }
 
   //Formula by Sergey to smooth out the driving inputs
@@ -180,6 +187,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return m_limelight.targetAcquired();
   }
 
+  public int targetID(){
+    return m_limelight.getTagNumber();
+  }
   public void takeSnapShot(){
     m_limelight.takeSnapShot();
   }

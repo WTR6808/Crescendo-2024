@@ -46,6 +46,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   public MK4_L3_SwerveModule(String name,
                              int driveCanID,
                              boolean driveInverted,
+                             boolean driveEncoderInverted,
                              int turnCanID,
                              boolean turnInverted,
                              int turnEncoderID,
@@ -55,12 +56,13 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     m_driveMotor.restoreFactoryDefaults();
     m_driveMotor.setIdleMode(IdleMode.kBrake);
     m_driveMotor.setInverted(driveInverted);
+    m_driveMotor.setOpenLoopRampRate(0.5);
     //FIXME m_driveMotor.setSmartCurrentLimit(xx);
+
     m_driveEncoder = m_driveMotor.getEncoder();
     m_driveEncoder.setPositionConversionFactor(Constants.SDSModuleConstants.DRIVE_DISTANCE_CONVERSION);
     m_driveEncoder.setVelocityConversionFactor(Constants.SDSModuleConstants.DRIVE_VELOCITY_CONVERSION);
-    m_driveMotor.setOpenLoopRampRate(0.5);
-    
+    m_driveEncoder.setInverted(driveEncoderInverted);
 
     m_turnMotor = new CANSparkMax(turnCanID, MotorType.kBrushless);
     m_turnMotor.restoreFactoryDefaults();

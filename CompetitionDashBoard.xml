@@ -1,0 +1,170 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Alliance" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="306" y="9"/>
+		<width>1066</width>
+		<height>58</height>
+		<property name="Color to show when true" value="204.0.0.255"/>
+		<property name="Color to show when false" value="51.51.255.255"/>
+	</widget>
+	<widget field="Take Snap Shot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="58" y="453"/>
+	</widget>
+	<widget field="Actual Pipeline" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="57" y="760"/>
+		<width>103</width>
+	</widget>
+	<widget field="Requested Pipeline" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="36" y="736"/>
+		<width>123</width>
+	</widget>
+	<widget field="Tag Id" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="177" y="747"/>
+		<width>57</width>
+	</widget>
+	<widget field="m_driveCommand" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="6" y="634"/>
+	</widget>
+	<widget field="At Target" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="197" y="704"/>
+	</widget>
+	<widget field="Target?" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="206" y="681"/>
+	</widget>
+	<widget field="Steer at SP" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="189" y="658"/>
+	</widget>
+	<widget field="Drive at SP" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="193" y="635"/>
+	</widget>
+	<widget field="m_strafeCommand" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="677"/>
+	</widget>
+	<widget field="m_steerCommand" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="4" y="656"/>
+	</widget>
+	<widget field="TX" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="126" y="406"/>
+	</widget>
+	<widget field="TY" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="20" y="406"/>
+	</widget>
+	<widget field="Stop Climber" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="18" y="132"/>
+	</widget>
+	<widget field="limelight-g_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="53" y="544"/>
+	</widget>
+	<widget field="limelight-g_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="34" y="518"/>
+		<width>222</width>
+	</widget>
+	<widget field="limelight-g_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="45" y="493"/>
+		<width>210</width>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="335" y="70"/>
+		<width>1047</width>
+		<height>711</height>
+		<property name="Camera Choice" value="limelight-g"/>
+	</static-widget>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+		<location x="20" y="204"/>
+	</widget>
+	<widget field="Test Drive to Target" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="36" y="429"/>
+	</widget>
+	<widget field="Stop Launcher" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="158" y="108"/>
+	</widget>
+	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="2" y="106"/>
+	</widget>
+	<widget field="Right Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="163" y="173"/>
+	</widget>
+	<widget field="Left Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="10" y="174"/>
+	</widget>
+	<widget field="Omega  : " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="154" y="69"/>
+	</widget>
+	<widget field="Speed y: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="154" y="45"/>
+	</widget>
+	<widget field="Speed x: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="153" y="22"/>
+	</widget>
+	<widget field="Input r: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="18" y="71"/>
+	</widget>
+	<widget field="Input y: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="47"/>
+	</widget>
+	<widget field="Input x: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="16" y="24"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="5" y="11"/>
+		<width>294</width>
+		<height>91</height>
+	</static-widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="Right Back Optimized Angle: "/>
+	<hidden field="Test Drive Distance (1.5 feet)"/>
+	<hidden field="DistError"/>
+	<hidden field="Right Front Turn Output: "/>
+	<hidden field="Run Launcher Amp"/>
+	<hidden field="Right Back Turn Output: "/>
+	<hidden field="Right Front Desired Speed: "/>
+	<hidden field="Right Back Turn Encoder Pos: "/>
+	<hidden field="Right Back Optimized Speed:"/>
+	<hidden field="Right Front Turn Encoder Pos: "/>
+	<hidden field="Test Auto Drive to Speaker"/>
+	<hidden field="Climber Right Encoder "/>
+	<hidden field="Left Back Desired Angle: "/>
+	<hidden field="Left Back Desired Speed: "/>
+	<hidden field="Left Front Optimized Speed:"/>
+	<hidden field="Right Front Absolute Pos: "/>
+	<hidden field="Test JAKE Drive to Target"/>
+	<hidden field="Left Back Absolute Pos: "/>
+	<hidden field="Current"/>
+	<hidden field="Right Back Drive Encoder Vel: "/>
+	<hidden field="Reset Gyro (Pigeon2)"/>
+	<hidden field="Run Launcher Reverse"/>
+	<hidden field="Left Back Drive Encoder Vel: "/>
+	<hidden field="Test Drive to Auto Target"/>
+	<hidden field="Test Search for Amp"/>
+	<hidden field="Test Strafe Distance (2 feet)"/>
+	<hidden field="Left Back Turn Encoder Pos: "/>
+	<hidden field="Climber Left Encoder "/>
+	<hidden field="Left Back Optimized Speed:"/>
+	<hidden field="Red Alliance"/>
+	<hidden field="Left Front Turn Encoder Pos: "/>
+	<hidden field="Run Servos"/>
+	<hidden field="Left Back Optimized Angle: "/>
+	<hidden field="Left Front Desired Speed: "/>
+	<hidden field="StrafeError"/>
+	<hidden field="Voltage"/>
+	<hidden field="Left Front Turn Output: "/>
+	<hidden field="Right Back Absolute Pos: "/>
+	<hidden field="STOP JAKE Drive to Target"/>
+	<hidden field="Right Flipper"/>
+	<hidden field="Left Front Drive Encoder Vel: "/>
+	<hidden field="Left Front Desired Angle: "/>
+	<hidden field="Run Launcher Speaker"/>
+	<hidden field="Right Front Optimized Angle: "/>
+	<hidden field="Left Back Turn Output: "/>
+	<hidden field="Left Flipper"/>
+	<hidden field="Right Back Desired Angle: "/>
+	<hidden field="TurnError"/>
+	<hidden field="Left Front Optimized Angle: "/>
+	<hidden field="Right Front Drive Encoder Vel: "/>
+	<hidden field="Left Front Absolute Pos: "/>
+	<hidden field="Right Front Desired Angle: "/>
+	<hidden field="Right Back Desired Speed: "/>
+	<hidden field="Right Front Optimized Speed:"/>
+</xml>

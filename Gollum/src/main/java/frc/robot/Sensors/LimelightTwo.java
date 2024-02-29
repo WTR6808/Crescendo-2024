@@ -158,9 +158,9 @@ public class LimelightTwo {
         snap.setInteger(1);
     }
 
-    public void setLEDs(boolean on){
-        //Value of 0 LEDs us Pipeline, 1 turns LEDs off
-        if (on){
+    public void setLEDs(boolean pipe){
+        //Value of 0 LEDs use Pipeline, 1 turns LEDs off
+        if (pipe){
             //Use Pipeline Setting
             table.getEntry("ledMode").setNumber(0);
         }else{
@@ -173,14 +173,14 @@ public class LimelightTwo {
         return (int) pipe.getInteger(0);
     }
 
-    public void setPipeline(){
+    private void setPipeline(){
         //setnumber filled with pipeline #
         //table.getEntry("pipeline").setInteger(m_pipeline);
         pipe.setInteger(m_pipeline);
     }
 
-    public void setPipeline(int pipe){
-        m_pipeline = pipe;
+    public void setPipeline(int pl){
+        m_pipeline = pl;
         setPipeline();
     }
 
@@ -290,18 +290,6 @@ public class LimelightTwo {
         m_steerCommand  = steerCommand;
         m_strafeCommand = strafeCommand;
 
-        SmartDashboard.putNumber("m_driveCommand", m_driveCommand);
-        SmartDashboard.putNumber("m_steerCommand", m_steerCommand);
-        SmartDashboard.putNumber("m_strafeCommand", m_strafeCommand);
-        SmartDashboard.putBoolean("Drive at SP", m_drivePID.atSetpoint());
-        SmartDashboard.putBoolean("Steer at SP", m_steerPID.atSetpoint());
-        SmartDashboard.putNumber("TY", distanceError());//distErr);
-        SmartDashboard.putNumber("TX", steerError());// steerErr);
-        SmartDashboard.putBoolean("Target?", targetAcquired());
-        SmartDashboard.putBoolean("At Target", atTarget());
-        SmartDashboard.putNumber("Requested Pipeline", m_pipeline);
-        SmartDashboard.putNumber("Actual Pipeline", getCurrentPipeline());
-        SmartDashboard.putNumber("Tag Id", getTagNumber());
 		return validResult;
 	}
 
@@ -379,5 +367,21 @@ public class LimelightTwo {
 
 		return validResult;
     }
-}
 
+    public void periodic(boolean showDashBoard){
+        if (showDashBoard){
+            SmartDashboard.putNumber("m_driveCommand", m_driveCommand);
+            SmartDashboard.putNumber("m_steerCommand", m_steerCommand);
+            SmartDashboard.putNumber("m_strafeCommand", m_strafeCommand);
+            SmartDashboard.putBoolean("Drive at SP", m_drivePID.atSetpoint());
+            SmartDashboard.putBoolean("Steer at SP", m_steerPID.atSetpoint());
+            SmartDashboard.putNumber("TY", distanceError());//distErr);
+            SmartDashboard.putNumber("TX", steerError());// steerErr);
+            SmartDashboard.putBoolean("Target?", targetAcquired());
+            SmartDashboard.putBoolean("At Target", atTarget());
+            SmartDashboard.putNumber("Requested Pipeline", m_pipeline);
+            SmartDashboard.putNumber("Actual Pipeline", getCurrentPipeline());
+            SmartDashboard.putNumber("Tag Id", getTagNumber());
+        }
+    }
+}

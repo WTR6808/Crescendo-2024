@@ -52,33 +52,37 @@ public final class Constants {
     public static final double PIGEON_AUTO_FIELD_CENTRIC_ANGLE = -90.0; //degrees
     
     //CANID's for Swerve Motors & CANCoders, Invert Settings and Turning Encoder Offsets
-    public static final int FRONT_RIGHT_DRIVE_CANID        = 11;
-    public static final int FRONT_RIGHT_TURN_CANID         = 12;
-    public static final int FRONT_RIGHT_ENCODER_CAN_ID     = 13;
-    public static final boolean FRONT_RIGHT_DRIVE_INVERTED = false;
-    public static final boolean FRONT_RIGHT_TURN_INVERTED  = false;
-    public static final double FRONT_RIGHT_OFFSET          = 0.136;//-0.280;//-0.338; //0.489//-0.385
+    public static final int FRONT_RIGHT_DRIVE_CANID                = 11;
+    public static final int FRONT_RIGHT_TURN_CANID                 = 12;
+    public static final int FRONT_RIGHT_ENCODER_CAN_ID             = 13;
+    public static final boolean FRONT_RIGHT_DRIVE_INVERTED         = false;
+    public static final boolean FRONT_RIGHT_DRIVE_ENCODER_INVERTED = false;
+    public static final boolean FRONT_RIGHT_TURN_INVERTED          = false;
+    public static final double FRONT_RIGHT_OFFSET                  = 0.136;//-0.280;//-0.338; //0.489//-0.385
 
-    public static final int BACK_RIGHT_DRIVE_CANID         = 21;
-    public static final int BACK_RIGHT_TURN_CANID          = 22;
-    public static final int BACK_RIGHT_ENCODER_CAN_ID      = 23;
-    public static final boolean BACK_RIGHT_DRIVE_INVERTED  = false;
-    public static final boolean BACK_RIGHT_TURN_INVERTED   = false;
-    public static final double BACK_RIGHT_OFFSET           = -0.176;//-0.439;//0.480;//-0.43;//-0.454
+    public static final int BACK_RIGHT_DRIVE_CANID                 = 21;
+    public static final int BACK_RIGHT_TURN_CANID                  = 22;
+    public static final int BACK_RIGHT_ENCODER_CAN_ID              = 23;
+    public static final boolean BACK_RIGHT_DRIVE_INVERTED          = false;
+    public static final boolean BACK_RIGHT_DRIVE_ENCODER_INVERTED  = false;
+    public static final boolean BACK_RIGHT_TURN_INVERTED           = false;
+    public static final double BACK_RIGHT_OFFSET                   = -0.176;//-0.439;//0.480;//-0.43;//-0.454
 
-    public static final int BACK_LEFT_DRIVE_CANID          = 31;
-    public static final int BACK_LEFT_TURN_CANID           = 32;
-    public static final int BACK_LEFT_ENCODER_CAN_ID       = 33;
-    public static final boolean BACK_LEFT_DRIVE_INVERTED   = true;
-    public static final boolean BACK_LEFT_TURN_INVERTED    = false;
-    public static final double BACK_LEFT_OFFSET           = 0.078;//0.181;//0.214; //0.171//0.208
+    public static final int BACK_LEFT_DRIVE_CANID                  = 31;
+    public static final int BACK_LEFT_TURN_CANID                   = 32;
+    public static final int BACK_LEFT_ENCODER_CAN_ID               = 33;
+    public static final boolean BACK_LEFT_DRIVE_INVERTED           = true;
+    public static final boolean BACK_LEFT_DRIVE_ENCODER_INVERTED   = true;
+    public static final boolean BACK_LEFT_TURN_INVERTED            = false;
+    public static final double BACK_LEFT_OFFSET                    = 0.078;//0.181;//0.214; //0.171//0.208
 
-    public static final int FRONT_LEFT_DRIVE_CANID         = 41;
-    public static final int FRONT_LEFT_TURN_CANID          = 42;
-    public static final int FRONT_LEFT_ENCODER_CAN_ID      = 43;
-    public static final boolean FRONT_LEFT_DRIVE_INVERTED  = true;
-    public static final boolean FRONT_LEFT_TURN_INVERTED   = false;
-    public static final double FRONT_LEFT_OFFSET           = -0.474;// 0.320; //0.341;//0.300; //.260//0.294
+    public static final int FRONT_LEFT_DRIVE_CANID                 = 41;
+    public static final int FRONT_LEFT_TURN_CANID                  = 42;
+    public static final int FRONT_LEFT_ENCODER_CAN_ID              = 43;
+    public static final boolean FRONT_LEFT_DRIVE_INVERTED          = true;
+    public static final boolean FRONT_LEFT_DRIVE_ENCODER_INVERTED  = true;
+    public static final boolean FRONT_LEFT_TURN_INVERTED           = false;
+    public static final double FRONT_LEFT_OFFSET                   = -0.474;// 0.320; //0.341;//0.300; //.260//0.294
 
     //CANID's for intake motors
     /*public static final int FRONT_RIGHT_INTAKE_CANID       = 51;

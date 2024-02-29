@@ -123,7 +123,7 @@ public class PigeonTwo {
     }
 
     public StatusCode setAngle(double degrees){
-        return m_pigeon2.setYaw(degrees);
+        return m_pigeon2.setYaw(-degrees);
     }
 
     public StatusCode reset(){

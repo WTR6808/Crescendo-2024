@@ -5,11 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Auto1;
 import frc.robot.commands.AutoDriveToSpeaker;
 import frc.robot.commands.AutoSearchForAmp;
 import frc.robot.commands.AutoStrafeDistance;
-//import frc.robot.commands.ClimberDown;
-//import frc.robot.commands.ClimberUp;
+import frc.robot.commands.ClimberUp;
+import frc.robot.commands.ClimberDown;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.LaunchAmp;
@@ -122,19 +123,19 @@ public class RobotContainer {
 
     //POV Up while true will raise the climber arms (lower robot) and stop when released
     //OPERATOR IS RESPONSIBLE FOR STOPPING BY RELEASING THE POV BUTTON
-    m_operatorController.povUp().whileTrue(new InstantCommand(()->m_Candy_Cane.climberUp(), m_launcher))
-                                .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
+    m_operatorController.y().whileTrue(new InstantCommand(()->m_Candy_Cane.climberUp(), m_launcher))
+                            .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
     //POV Down while true will lower the climber arms (lift robot) and stop when released
     //OPERATOR IS RESPONSIBLE FOR STOPPING BY RELEASING THE POV BUTTON
-    m_operatorController.povDown().whileTrue(new InstantCommand(()->m_Candy_Cane.climberDown(), m_launcher))
-                                  .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
+    m_operatorController.a().whileTrue(new InstantCommand(()->m_Candy_Cane.climberDown(), m_launcher))
+                            .onFalse(new InstantCommand(()->m_Candy_Cane.stopClimber(), m_launcher));
 
     //Commented POV Commands Below have safety stops in them to prevent over
     //tightening the ropes.  Had problems 2/26 with encoder positions not being
     //reliable, so replaced with above.  If we can figure out encoder issues,
     //go back to these routines.
-    //m_operatorController.povUp().onTrue(new ClimberUp(m_Candy_Cane));
-    //m_operatorController.povDown().onTrue(new ClimberDown(m_Candy_Cane));
+    m_operatorController.povUp().onTrue(new ClimberUp(m_Candy_Cane));
+    m_operatorController.povDown().onTrue(new ClimberDown(m_Candy_Cane));
   }
 
   /**
@@ -145,6 +146,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return Autos.exampleAuto(m_exampleSubsystem);
-    return null;
+    return new Auto1(m_swerve, m_launcher);
+    //return null;
   }
 }
