@@ -14,6 +14,31 @@ public class LEDSubsystem extends SubsystemBase {
     // Buffer for LED data, change this to change LED colors
     private static AddressableLEDBuffer m_ledBuffer = null;
 
+    // LED Sections - Start / End
+    private int[][] m_ledSections = {
+        {1, 16}, // Front Left
+        {17, 31}, // Front Top
+        {32, 48}, // Front Right
+        {49, 62}, // Front Bottom
+        {63, 72}, // Front Side Left, I know this one and the next are both 14
+        {73, 86} // Front Side Right
+    };
+
+    //TODO get these values
+    // Start / End
+    private int[][] m_ledLengthDifs = {{0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+    private Color[] m_ledStripe = { 
+        new Color(0, 255, 55),
+        new Color(0, 255, 55),
+        new Color(0, 255, 55),
+    };
+
+ 
+    private int m_stripeTime = 0;
+    private int m_currentStripeTime = 0;
+    private int m_stripeStart = 0;
+
+    private boolean m_isOff = false;
     // First color to be displayed on rainbow start
     int m_rainbowFirstPixelHue = 0;
 
@@ -94,14 +119,73 @@ public class LEDSubsystem extends SubsystemBase {
         m_rainbowFirstPixelHue += 3;
         // Check bounds
         m_rainbowFirstPixelHue %= 180;
-      }
+    }
+
+    public void stripe(int[] stripes, int space, boolean[] reverse, int updateAtThisManyCycles) {
+        if (updateAtThisManyCycles != m_stripeTime) m_stripeTime = updateAtThisManyCycles;
+        if (m_stripeStart != space) m_stripeStart = 0;
+
+        if (m_currentStripeTime >= m_stripeTime) {
+            int start, end;
+
+            for (int stripe : stripes) {
+                start = m_ledSections[stripe][0];
+                end = m_ledSections[stripe][1];
+
+                for (int currentLed = start + m_stripeStart; currentLed < end; currentLed += space){
+                    if (currentLed + m_ledLengthDifs[stripe][0] + m_ledStripe.length > start ) {
+                        for (int j = currentLed + m_ledLengthDifs[stripe][0] + m_ledStripe.length; j >= start; j--) {
+                            setIndividualColor(j, m_ledStripe[j-start]);
+                        }
+                    }
+
+                    for(int i = 0; i < m_ledStripe.length; i++) {
+                        if (currentLed + i > end) continue;
+                        
+
+                        setIndividualColor(currentLed+i, m_ledStripe[i]);
+
+                    }
+
+                    currentLed += m_ledStripe.length;
+                }
+                
+            }
+            if (m_stripeStart >= space) m_stripeStart = 0;
+            m_stripeStart++;
+
+            m_currentStripeTime = 0;
+        }
+
+        else m_currentStripeTime++;
+
+    }
+
+    public void off() {
+        for (int i = 0; i < m_ledBuffer.getLength(); i++) {
+            m_ledBuffer.setRGB(i, 0, 0, 0);
+        }
+    }
+
+    public void on() {
+        m_isOff = false;
+    }
 
     @Override
     public void periodic() {
+        if (m_isOff) return;
+
         // Updates the rainbow effect, remove to customize the leds
-        rainbow();
+        // rainbow();
+        int[] sections = {0,2};
+        boolean[] reverseWhatSections = {false, true};
+        stripe(sections, 2, reverseWhatSections, 20);
 
         // Should stay here unless periodic is completly unused. 
         updateColors();
+
+        // Set all leds to same color because you can write over it
+        // *purple*
+        setAllColors(125, 30, 190);
     } 
 }
