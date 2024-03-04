@@ -37,8 +37,8 @@ public class DriveDistance extends Command {
   public void execute() {
     double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()),-0.9,0.9);
     if (!distancePID.atSetpoint()){
-      if (Math.abs(s)<0.4){
-        s=Math.signum(s)*0.4;
+      if (Math.abs(s)<0.5){
+        s=Math.signum(s)*0.5;
       }
     }
     m_swerve.drive(s, 0.0, 0.0, false);

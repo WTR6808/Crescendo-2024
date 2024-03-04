@@ -20,12 +20,13 @@ public class Auto1 extends SequentialCommandGroup {
     addCommands(
       new AutoDriveToSpeaker(Swerve), 
       new LaunchSpeaker(Launcher),
-      //new WaitCommand(1.3), 
-      new AutoSearchForAmp(Swerve)/*,
-      new DriveDistance(Swerve), 
-      new AutoResetPigeon(Swerve), 
-      new AutoStrafeDistance(Swerve)
-      */
+      new WaitCommand(1.3), 
+      new TurnAngle(Swerve),
+      new AutoSearchForAmp(Swerve),
+      //new DriveToTarget(Swerve),
+      new DriveDistance(Swerve, 36.0).withTimeout(2.0), 
+      new AutoResetPigeon2(Swerve), 
+      new AutoStrafeDistance(Swerve, 48.0)
     );
   }
 }

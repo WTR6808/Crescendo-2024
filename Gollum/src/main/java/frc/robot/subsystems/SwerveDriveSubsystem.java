@@ -132,11 +132,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   //Returns the average of the Drive Encoder Distances in Meters
   public double getAvgDistance(){
-    SmartDashboard.putNumber("Font Left Encoder: ", m_frontLeft.getDriveDistance());
-    SmartDashboard.putNumber("Font Right Encoder: ", m_frontRight.getDriveDistance());
+    SmartDashboard.putNumber("Front Left Encoder: ", m_frontLeft.getDriveDistance());
+    SmartDashboard.putNumber("Front Right Encoder: ", m_frontRight.getDriveDistance());
     SmartDashboard.putNumber("Back Left Encoder: ", m_backLeft.getDriveDistance());
     SmartDashboard.putNumber("Back Right Encoder: ", m_backRight.getDriveDistance());
-    return ((m_frontLeft.getDriveDistance() +
+    return ((m_frontLeft.getDriveDistance()+
              m_backLeft.getDriveDistance() +
              m_frontRight.getDriveDistance() +
              m_backRight.getDriveDistance()) / 4.0);
@@ -190,6 +190,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public int targetID(){
     return m_limelight.getTagNumber();
   }
+
   public void takeSnapShot(){
     m_limelight.takeSnapShot();
   }
@@ -209,6 +210,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public void stopDriveToTarget(){
+    this.stop();
     m_limelight.endTargetTracking();
   }
 

@@ -19,7 +19,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final double DEADZONE = 0.05;//0.3;
+    public static final double DEADZONE = 0.10;//0.3;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
@@ -33,7 +33,7 @@ public final class Constants {
     public static final double RADIUS = Math.sqrt(TRACK_WIDTH*TRACK_WIDTH + WHEEL_BASE*WHEEL_BASE) /  2;
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4.0);
 
-    public static final double ROBOT_MAX_LINEAR_VELOCITY  = 5620.0/60.0 *
+    public static final double ROBOT_MAX_LINEAR_VELOCITY  =6200/60.0 *
                                                             SDSModuleConstants.MK4_L3_DRIVE_REDUCTION *
                                                             WHEEL_DIAMETER * Math.PI;
 
@@ -56,7 +56,7 @@ public final class Constants {
     public static final int FRONT_RIGHT_TURN_CANID                 = 12;
     public static final int FRONT_RIGHT_ENCODER_CAN_ID             = 13;
     public static final boolean FRONT_RIGHT_DRIVE_INVERTED         = false;
-    public static final boolean FRONT_RIGHT_DRIVE_ENCODER_INVERTED = false;
+    public static final boolean FRONT_RIGHT_DRIVE_ENCODER_INVERTED = true;
     public static final boolean FRONT_RIGHT_TURN_INVERTED          = false;
     public static final double FRONT_RIGHT_OFFSET                  = 0.136;//-0.280;//-0.338; //0.489//-0.385
 
@@ -66,7 +66,7 @@ public final class Constants {
     public static final boolean BACK_RIGHT_DRIVE_INVERTED          = false;
     public static final boolean BACK_RIGHT_DRIVE_ENCODER_INVERTED  = false;
     public static final boolean BACK_RIGHT_TURN_INVERTED           = false;
-    public static final double BACK_RIGHT_OFFSET                   = -0.176;//-0.439;//0.480;//-0.43;//-0.454
+    public static final double BACK_RIGHT_OFFSET                   = -0.176;//0.439;//0.480;//-0.43;//-0.454
 
     public static final int BACK_LEFT_DRIVE_CANID                  = 31;
     public static final int BACK_LEFT_TURN_CANID                   = 32;
@@ -126,7 +126,9 @@ public final class Constants {
     public static final boolean MK4_L3_TURN_INVERTED  = true;
 
     //Encoder Constants
-    public static final double DRIVE_ENCODER_CPR = 42.0; //NEO Built In
+    //public static final double DRIVE_ENCODER_CPR = 42.0; //NEO Built In
+    //NEO Built In Encoder GetPosition returns Revolutions not Encoder Ticks use 1.0 instead of 42
+    public static final double DRIVE_ENCODER_CPR = 1.0;
     public static final double TURN_ENCODER_CPR  = 42.0; //NEO Built In
   
     //Linear Distance Conversion Factor is Computed Using the Following Equation:
@@ -153,7 +155,7 @@ public final class Constants {
     public static final double DRIVE_I = 0.0;
     public static final double DRIVE_D = 0.0005;
 
-    public static final double TURN_P  = 0.5;
+    public static final double TURN_P  = 0.4;//0.6;
     public static final double TURN_I  = 0.0;
     public static final double TURN_D  = 0.0;
   }
@@ -184,7 +186,7 @@ public final class Constants {
     public static final double AMP_LAUNCH_D         =    0.0;
     public static final double AMP_LAUNCH_IZONE     =    0.0;
     public static final double AMP_FEEDFORWARD      =    0.00017;
-    public static final double AMP_VELOCITY         =    800.0;
+    public static final double AMP_VELOCITY         =    900.0;
     //TODO find velocity constants for launcher
     
 
@@ -196,7 +198,8 @@ public final class Constants {
     public static final double RIGHT_DOWN         = 0.0;
 
     //Make Command Constants
-    public static final double VELOCITY_TOLERANCE  = 100.0;
+    public static final double AMP_VELOCITY_TOLERANCE  = 100.0;
+    public static final double SPEAKER_VELOCITY_TOLERANCE = 150.0;
     public static final int FLIP_VWOOP_TIME        = 60;
   }
 

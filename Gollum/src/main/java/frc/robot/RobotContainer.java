@@ -17,6 +17,7 @@ import frc.robot.commands.LaunchAmp;
 import frc.robot.commands.LaunchSpeaker;
 import frc.robot.subsystems.Candy_Cane;
 import frc.robot.subsystems.IT_IS_A_LAUNCHER;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,6 +39,7 @@ public class RobotContainer {
   SwerveDriveSubsystem m_swerve = SwerveDriveSubsystem.Instance();
   IT_IS_A_LAUNCHER m_launcher = IT_IS_A_LAUNCHER.Instance();
   Candy_Cane m_Candy_Cane = Candy_Cane.Instance();
+  LEDSubsystem m_leds = LEDSubsystem.Instance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   //private final CommandXboxController m_driverController =
@@ -108,7 +110,7 @@ public class RobotContainer {
     
     //DriveToApril aligns the robot to the desired launching position based on the currently detected April Tag
     final JoystickButton DriveToApril = new JoystickButton(m_Joystick, 1);
-    DriveToApril.onTrue(new DriveToTarget(m_swerve));
+    DriveToApril.onTrue(new DriveToTarget(m_swerve).withTimeout(2.0));
 
     //*****************Operator Controller Button Assignments**********************
     //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : )

@@ -20,9 +20,12 @@
       "/SmartDashboard/Stop Climber": "Command",
       "/SmartDashboard/Stop Launcher": "Command",
       "/SmartDashboard/Take Snap Shot": "Command",
+      "/SmartDashboard/Test Auto Drive to Speaker": "Command",
       "/SmartDashboard/Test Drive Distance (1.5 feet)": "Command",
       "/SmartDashboard/Test Drive to Auto Target": "Command",
-      "/SmartDashboard/Test Drive to Target": "Command"
+      "/SmartDashboard/Test Drive to Target": "Command",
+      "/SmartDashboard/Test Search for Amp": "Command",
+      "/SmartDashboard/Test Strafe Distance (2 feet)": "Command"
     }
   },
   "NetworkTables": {

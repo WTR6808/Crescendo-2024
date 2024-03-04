@@ -28,7 +28,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   private RelativeEncoder m_driveEncoder;
   private CANSparkMax     m_turnMotor;
   private CANcoder m_turnEncoder;
-
+  //private double m_driveEncoderInverted = 1.0;
   //FIXME Change to on SparkMax PID Controller?
   /*private final PIDController m_drivePID = new PIDController(Constants.SDSModuleConstants.DRIVE_P,
                                                              Constants.SDSModuleConstants.DRIVE_I,
@@ -62,7 +62,10 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     m_driveEncoder = m_driveMotor.getEncoder();
     m_driveEncoder.setPositionConversionFactor(Constants.SDSModuleConstants.DRIVE_DISTANCE_CONVERSION);
     m_driveEncoder.setVelocityConversionFactor(Constants.SDSModuleConstants.DRIVE_VELOCITY_CONVERSION);
-    m_driveEncoder.setInverted(driveEncoderInverted);
+//    if (driveEncoderInverted)  m_driveEncoderInverted = -1.0;
+//    else m_driveEncoderInverted = 1.0;
+    //Cannot set Encoder Inverted State if setting Motor Inverted State.
+    //m_driveEncoder.setInverted(driveEncoderInverted);
 
     m_turnMotor = new CANSparkMax(turnCanID, MotorType.kBrushless);
     m_turnMotor.restoreFactoryDefaults();
@@ -91,7 +94,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
   }
 
   public double getDriveDistance(){
-    return m_driveEncoder.getPosition();
+    return Math.abs(m_driveEncoder.getPosition());//*m_driveEncoderInverted;
   }
 
   //TODO Replace this routine for Actual Swerve
@@ -105,7 +108,7 @@ public class MK4_L3_SwerveModule extends SubsystemBase {
     //driveOutput = m_drivePID.calculate(driveVelocity,state.speedMetersPerSecond);
     //driveOutput = driveOutput / Constants.Measurements.ROBOT_MAX_LINEAR_VELOCITY;
     driveOutput = state.speedMetersPerSecond;
-    driveOutput = MathUtil.clamp(driveOutput, -.85, .85);
+    driveOutput = MathUtil.clamp(driveOutput, -1.0, 1.0);
 
 
     turnOutput = MathUtil.clamp(m_turnPID.calculate(encoderRotation.getRadians(),state.angle.getRadians()),-1.0,1.0);
