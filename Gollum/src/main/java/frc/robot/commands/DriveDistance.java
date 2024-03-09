@@ -35,7 +35,8 @@ public class DriveDistance extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()),-0.9,0.9);
+    //FIXME getAvgDistance() only returns positive values, need to handle negative distances
+    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()*Math.signum(m_distance)),-0.9,0.9);
     if (!distancePID.atSetpoint()){
       if (Math.abs(s)<0.5){
         s=Math.signum(s)*0.5;

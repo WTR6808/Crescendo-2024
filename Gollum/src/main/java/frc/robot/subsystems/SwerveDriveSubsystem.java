@@ -5,11 +5,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Sensors.FieldManagementSystem;
 import frc.robot.Sensors.LimelightTwo;
 import frc.robot.Sensors.PigeonTwo;
 
@@ -57,11 +60,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
                             Constants.SwerveDriveConstants.BACK_LEFT_ENCODER_CAN_ID,
                             Constants.SwerveDriveConstants.BACK_LEFT_OFFSET);
                             
-  //Create CTRE Pigeon 2
+  //Get Instance CTRE Pigeon 2
   PigeonTwo m_pigeon = PigeonTwo.getInstance();
 
   //Get Instance of the Limelight
   LimelightTwo m_limelight = LimelightTwo.Instance();
+
+  //Get Instance of Field Management System Information
+  FieldManagementSystem FMSInfo = FieldManagementSystem.getInstance();
 
   //Used for current and voltage graphing;
   private Double current;
@@ -108,7 +114,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Speed x: ", speeds.vxMetersPerSecond);
     SmartDashboard.putNumber("Speed y: ", speeds.vyMetersPerSecond);
     SmartDashboard.putNumber("Omega  : ", speeds.omegaRadiansPerSecond);
-    var swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds);
+    SwerveModuleState[] swerveModuleStates;
+    if (Math.abs(x)   >= Constants.OperatorConstants.DEADZONE ||
+        Math.abs(y)   >= Constants.OperatorConstants.DEADZONE ||
+        Math.abs(rot) >= Constants.OperatorConstants.DEADZONE){
+      swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(speeds);
+    } else {
+      swerveModuleStates = new SwerveModuleState[]{
+        new SwerveModuleState(0.0, new Rotation2d( Math.PI/4.0)), //LF
+        new SwerveModuleState(0.0, new Rotation2d(-Math.PI/4.0)), //RF
+        new SwerveModuleState(0.0, new Rotation2d(-Math.PI/4.0)), //LB
+        new SwerveModuleState(0.0, new Rotation2d( Math.PI/4.0))  //RB
+      };
+    }
     //TODO replace swerveModuleStates with ...
     //var swerveModuleStates = Constants.SwerveDriveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(
     //                                ChassisSpeeds.discretize(speeds, TimedRobot.kDefaultPeriod));
@@ -195,21 +213,25 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     m_limelight.takeSnapShot();
   }
 
-  public void initAutoDriveToTarget(){
-    this.stop();
-    m_limelight.InitializeAutonTracking();
-  }
-
-  public void initDriveToTarget(){
+  private void initDriveToTarget(){
     this.stop();
     m_limelight.initializeTargetTracking();
   }
-
-  public void setPipeline(int p){
-    m_limelight.setPipeline(p);
+  public void InitDriveToSpeaker(){
+    initDriveToTarget();
+    m_limelight.setPipeline(Constants.Limelight_Constants.SPEAKER_PIPE);
   }
 
-  public void stopDriveToTarget(){
+  public void InitAutoDriveToSpeaker(){
+    initDriveToTarget();
+    m_limelight.setPipeline(Constants.Limelight_Constants.SPEAKER_AUTO_PIPE);
+  }
+  public void InitDriveToAmp(){
+    initDriveToTarget();
+    m_limelight.setPipeline(Constants.Limelight_Constants.AMP_PIPE);
+  }
+
+ public void stopDriveToTarget(){
     this.stop();
     m_limelight.endTargetTracking();
   }

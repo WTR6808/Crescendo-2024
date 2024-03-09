@@ -211,8 +211,17 @@ public final class Constants {
     public static final int SOURCE_PIPELINE    = 4;
     public static final int RED_AUTO_PIPELINE  = 6;
     public static final int BLUE_AUTO_PIPELINE = 7;
-  }
 
+    public static final int RED_SPEAKER_TAGID  = 4;
+    public static final int BLUE_SPEAKER_TAGID = 7;
+    public static final int RED_AMP_TAGID      = 5;
+    public static final int BLUE_AMP_TAGID     = 6;
+    
+    public static final int SPEAKER_PIPE       = 2;
+    public static final int AMP_PIPE           = 1;
+    public static final int SPEAKER_AUTO_PIPE  = 0;
+  }
+    
   public static class LED_Constants {
     public static final int LED_ROBORIO_PWM_HEADER = 2;
     public static final int LED_LENGTH = 150; // 30 per meter, 5 meters. 5*30 = 150;

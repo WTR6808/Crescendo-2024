@@ -7,10 +7,8 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Sensors.FieldManagementSystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class AutoStrafeDistance extends Command {
@@ -18,8 +16,8 @@ public class AutoStrafeDistance extends Command {
   private double m_distance = 0;
   private PIDController distancePID = new PIDController(1,0,0);
 
-  private NetworkTable FMSInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
-  private NetworkTableEntry IsRedAlliance  = FMSInfo.getEntry("IsRedAlliance");
+  //Get Instance of Field Management System Information
+  FieldManagementSystem FMSInfo = FieldManagementSystem.getInstance();
 
   /** Creates a new StrafeDistance. */
   public AutoStrafeDistance(SwerveDriveSubsystem swerve, double dist) {
@@ -34,10 +32,11 @@ public class AutoStrafeDistance extends Command {
   public void initialize() {
     m_swerve.stop();
     m_swerve.resetEncoders();
-    //If we are the blue alliance, move in negative direction
-    if (!IsRedAlliance.getBoolean(false)){
-      m_distance *= -1;
+    //If we are the blue alliance, move in negative direction (To the right)
+    if (!FMSInfo.isRedAlliance()){
+      m_distance *= -1.0;
     }
+
     distancePID.setSetpoint(Units.inchesToMeters(m_distance));
     distancePID.setTolerance(Units.inchesToMeters(1.0));
   }
@@ -45,10 +44,11 @@ public class AutoStrafeDistance extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()),-0.9,0.9);
+    //FIXME getAvgDistance() only returns positive values, need to handle negative distances
+    double s = MathUtil.clamp(distancePID.calculate(m_swerve.getAvgDistance()*Math.signum(m_distance)),-0.9,0.9);
     if (!distancePID.atSetpoint()){
-      if (Math.abs(s)<0.4){
-        s=Math.signum(s)*0.4;
+      if (Math.abs(s)<0.6){
+        s=Math.signum(s)*0.6;
       }
     }
     m_swerve.drive(0.0, s, 0.0, false);

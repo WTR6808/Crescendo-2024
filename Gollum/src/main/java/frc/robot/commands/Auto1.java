@@ -18,15 +18,16 @@ public class Auto1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoDriveToSpeaker(Swerve), 
+      new AutoDriveToSpeaker(Swerve).withTimeout(3.0), 
       new LaunchSpeaker(Launcher),
       new WaitCommand(1.3), 
-      new TurnAngle(Swerve),
-      new AutoSearchForAmp(Swerve),
-      //new DriveToTarget(Swerve),
-      new DriveDistance(Swerve, 36.0).withTimeout(2.0), 
+      //new AutoTurnAngle(Swerve, 45.0), //May not need this once we change how we switch targets
+      new AutoSearchForAmp_2(Swerve),
+      //new AutoDriveToAmp(Swerve),
+      new DriveToTarget(Swerve),
+      new DriveDistance(Swerve,54.0).withTimeout(3.0), 
       new AutoResetPigeon2(Swerve), 
-      new AutoStrafeDistance(Swerve, 48.0)
+      new AutoStrafeDistance(Swerve,60.0)
     );
   }
 }

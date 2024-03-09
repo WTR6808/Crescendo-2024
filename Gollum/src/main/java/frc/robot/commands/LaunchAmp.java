@@ -50,7 +50,7 @@ public class LaunchAmp extends Command {
   @Override
   public boolean isFinished() {
      return (m_timer > Constants.launcherConstants.FLIP_VWOOP_TIME);
-    } 
+  } 
 //    else{
 //      return false;
 //    }

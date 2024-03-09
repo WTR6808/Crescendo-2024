@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Auto1;
 import frc.robot.commands.AutoDriveToSpeaker;
-import frc.robot.commands.AutoSearchForAmp;
+import frc.robot.commands.AutoSearchForAmp_2;
 import frc.robot.commands.AutoStrafeDistance;
 import frc.robot.commands.ClimberUp;
 import frc.robot.commands.ClimberDown;
@@ -68,7 +68,7 @@ public class RobotContainer {
                     -m_Joystick.getY(),
                     -m_Joystick.getX(), 
                     -m_Joystick.getZ(),
-                     /* */ /* 
+                     /* */ /*
                     -m_driverController.getLeftY(), 
                     -m_driverController.getLeftX(),
                     -m_driverController.getRightX(),
@@ -90,7 +90,7 @@ public class RobotContainer {
     SmartDashboard.putData("Test Auto Drive to Speaker",new AutoDriveToSpeaker(m_swerve));
     SmartDashboard.putData("Test Drive Distance (1.5 feet)",new DriveDistance(m_swerve, 18));
     SmartDashboard.putData("Test Strafe Distance (2 feet)", new AutoStrafeDistance(m_swerve, 24));
-    SmartDashboard.putData("Test Search for Amp", new AutoSearchForAmp(m_swerve));
+    SmartDashboard.putData("Test Search for Amp", new AutoSearchForAmp_2(m_swerve));
   }
 
   /**

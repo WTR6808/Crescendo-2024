@@ -6,23 +6,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Sensors.FieldManagementSystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class TurnAngle extends Command {
+public class AutoTurnAngle extends Command {
   private PIDController anglePID = new PIDController(1, 0, 0);
   private SwerveDriveSubsystem m_swerve;
   private double m_angle;
-  private NetworkTable FMSInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
-  private NetworkTableEntry IsRedAlliance  = FMSInfo.getEntry("IsRedAlliance");
+
+  //Get instance of the Field Management System Information
+  FieldManagementSystem FMSInfo = FieldManagementSystem.getInstance();
+
   /** Creates a new TurnAngle. */
-  public TurnAngle(SwerveDriveSubsystem s) {
+  public AutoTurnAngle(SwerveDriveSubsystem s, double a) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_swerve = s;
-    //m_angle = a;
+    //Red turns Counter-Clockwise (+), Blue turns Clockwise (-)
+    m_angle = FMSInfo.isRedAlliance() ? a : -a; 
     addRequirements(s);
   }
 
@@ -32,12 +33,6 @@ public class TurnAngle extends Command {
     anglePID.setSetpoint(m_angle);
     anglePID.setTolerance(2);
     m_swerve.reset_pigeon2();
-    if (IsRedAlliance.getBoolean(false)){//red is positive
-      anglePID.setSetpoint(45.0);
-      
-    } else {
-      anglePID.setSetpoint(-45.0);
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.

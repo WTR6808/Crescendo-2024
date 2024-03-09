@@ -19,7 +19,8 @@ import frc.robot.Constants;
 public class LimelightTwo {
     //Create instance for Singleton
     private static LimelightTwo instance = null;
-
+/*
+    //Array to map April Tag Ids to Limelight Pipelines
     private static final int TAGS_TO_PIPELINE[] = {Constants.Limelight_Constants.DEFAULT_PIPELINE,   //# 0 No target use default pipeline
                                                    Constants.Limelight_Constants.SOURCE_PIPELINE,    //# 1 Blue Source Right 
                                                    Constants.Limelight_Constants.SOURCE_PIPELINE,    //# 2 Blue Source Left  
@@ -37,24 +38,23 @@ public class LimelightTwo {
                                                    Constants.Limelight_Constants.DEFAULT_PIPELINE,   //#14 Not Used by Gollum
                                                    Constants.Limelight_Constants.DEFAULT_PIPELINE,   //#15 Not Used by Gollum
                                                    Constants.Limelight_Constants.DEFAULT_PIPELINE};  //#16 Not Used by Gollum
-
+*/
     private static final double TX_MAX            = 29.80;
     private static final double TY_MAX            = 24.85;
+    private static final double DRIVE_KP          =  2.75/TY_MAX;
+    private static final double STEER_KP          =  2.75/TX_MAX;
     private static final double X_TOLERANCE       =  0.5;//1.0;
     private static final double Y_TOLERANCE       =  0.5;//1.0;
-    private static final int    MAX_FAILURES      = 20;
     private static final int    MAX_TARGET_LOSSES = 20;
 
-    NetworkTable FMSInfo = NetworkTableInstance.getDefault().getTable("FMSInfo");
-    NetworkTableEntry IsRedAlliance  = FMSInfo.getEntry("IsRedAlliance");
-
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-g");
-    NetworkTableEntry tx   = table.getEntry("tx");
-    NetworkTableEntry ty   = table.getEntry("ty");
-    NetworkTableEntry tv   = table.getEntry("tv");
-    NetworkTableEntry tid  = table.getEntry("tid");
-    NetworkTableEntry pipe = table.getEntry("getpipe");
-    NetworkTableEntry snap = table.getEntry("snapshot");
+    private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-g");
+    private NetworkTableEntry tx          = table.getEntry("tx");
+    private NetworkTableEntry ty          = table.getEntry("ty");
+    private NetworkTableEntry tv          = table.getEntry("tv");
+    private NetworkTableEntry tid         = table.getEntry("tid");
+    private NetworkTableEntry pipe        = table.getEntry("getpipe");
+    private NetworkTableEntry snap        = table.getEntry("snapshot");
+    private NetworkTableEntry priorityTid = table.getEntry("priorityid"); //April tag to be tracked 
 
     private static final double MAX_DRIVE         =  0.90;
 	private static final double MIN_DRIVE         =  0.40;
@@ -67,17 +67,20 @@ public class LimelightTwo {
 
     private boolean m_trackingStarted = false;
     private int m_targetLosses = MAX_TARGET_LOSSES;
-    private int m_failureCount = 0;
+//    private int m_failureCount = 0;
     private int m_pipeline = 0;
 
-	private PIDController m_drivePID = new PIDController(2.5/TY_MAX, 0.0, 0.0);
-	private PIDController m_steerPID = new PIDController(2.5/TX_MAX, 0.0, 0.0);
+	private PIDController m_drivePID = new PIDController(DRIVE_KP, 0.0, 0.0);
+	private PIDController m_steerPID = new PIDController(STEER_KP, 0.0, 0.0);
 
     //Uncomment for Debug Purposes in Simulation
     //private double distErr = TY_MAX/5.0;
     //private double steerErr = TX_MAX/5.0;
 
-    /** Creates a new SwerveDriveSubsystem. */
+    //Get Instance of Field Management System Information
+    private FieldManagementSystem FMSInfo = FieldManagementSystem.getInstance();
+
+    /** Creates a new Limelight Instance */
     public static LimelightTwo Instance() {
         if (instance == null){ 
             instance = new LimelightTwo();
@@ -96,7 +99,7 @@ public class LimelightTwo {
         //Set LEDs to Use the Pipeline
         setLEDs(true);
         //Set to the Default Pipeline
-        setPipeline();
+        setPipeline(Constants.Limelight_Constants.SPEAKER_AUTO_PIPE);
     }
 
 	public double steerCommand(){
@@ -182,12 +185,28 @@ public class LimelightTwo {
     public void setPipeline(int pl){
         m_pipeline = pl;
         setPipeline();
+        //Set the Priority April Tag Id for tracking based on Alliance and Target
+        // Routine currently only looks at Amp and Speaker targets.
+        if (FMSInfo.isRedAlliance()){
+            if (m_pipeline == Constants.Limelight_Constants.AMP_PIPE){
+                priorityTid.setInteger(Constants.Limelight_Constants.RED_AMP_TAGID);
+            } else {
+                priorityTid.setInteger(Constants.Limelight_Constants.RED_SPEAKER_TAGID);
+            }
+        } else {
+            if (m_pipeline == Constants.Limelight_Constants.AMP_PIPE){
+                priorityTid.setInteger(Constants.Limelight_Constants.BLUE_AMP_TAGID);
+            } else {
+                priorityTid.setInteger(Constants.Limelight_Constants.BLUE_SPEAKER_TAGID);
+            }
+        }
     }
 
     public void initializeTargetTracking(){
+        //No Longer auto setting the Pipeline, Inconsistent in HH Competition
         //Get the pipeline based on the current tracked April Tag
-        m_pipeline = TAGS_TO_PIPELINE[getTagNumber()];
-        setPipeline();
+        //m_pipeline = TAGS_TO_PIPELINE[getTagNumber()];
+        //setPipeline();
 
         //Reset the PID controllers
 		m_drivePID.reset();
@@ -200,12 +219,12 @@ public class LimelightTwo {
         //Reset Failure Counts
         m_trackingStarted = true;
         m_targetLosses = 0;
-        m_failureCount = 0;
         //SmartDashboard.putBoolean("Red Alliance", IsRedAlliance.getBoolean(false));
     }
 
     public void InitializeAutonTracking(){
-        if (IsRedAlliance.getBoolean(false)){
+//        if (IsRedAlliance.getBoolean(false)){
+        if (FMSInfo.isRedAlliance()){
             m_pipeline = Constants.Limelight_Constants.RED_AUTO_PIPELINE;
         } else {
             m_pipeline =Constants.Limelight_Constants.BLUE_AUTO_PIPELINE;
@@ -219,14 +238,14 @@ public class LimelightTwo {
         //Reset Failure Counts
         m_trackingStarted = true;
         m_targetLosses = 0;
-        m_failureCount = 0;
     }
 
     public void endTargetTracking(){
         //Set back to default pipeline
-        m_pipeline = Constants.Limelight_Constants.DEFAULT_PIPELINE;
-        setPipeline();
-
+        //m_pipeline = Constants.Limelight_Constants.DEFAULT_PIPELINE;
+        //setPipeline();
+        //Set back to Speaker pipeline
+        setPipeline(Constants.Limelight_Constants.SPEAKER_PIPE);
         m_trackingStarted = false;
     }
 	
@@ -248,7 +267,7 @@ public class LimelightTwo {
         double strafeCommand = 0.0;
 
         if (validResult){
-            m_failureCount = MAX_FAILURES;//0;
+//            m_failureCount = MAX_FAILURES;//0;
             if (targetAcquired()){
                 //Reset the intermittent Target Loss count
                 m_targetLosses = 0;
@@ -318,7 +337,6 @@ public class LimelightTwo {
         double strafeCommand = 0.0;
 
         if (validResult){
-            m_failureCount = 0;
             /**********************************************************************
             Your Calculations for driveCommand  - Forward/Backward, Forward is +
                                   strafeCommand - Left/Right, Left is +
@@ -326,7 +344,7 @@ public class LimelightTwo {
             go Here
             ***********************************************************************/
 		} else {
-			validResult = (++m_failureCount <= MAX_FAILURES);
+//			validResult = (++m_failureCount <= MAX_FAILURES);
 		}
         
         m_driveCommand  = driveCommand;
@@ -350,7 +368,6 @@ public class LimelightTwo {
         double strafeCommand = 0.0;
 
         if (validResult){
-            m_failureCount = 0;
             /**********************************************************************
             Your Calculations for driveCommand  - Forward/Backward, Forward is +
                                   strafeCommand - Left/Right, Left is +
@@ -358,7 +375,7 @@ public class LimelightTwo {
             go Here
             ***********************************************************************/
 		} else {
-			validResult = (++m_failureCount <= MAX_FAILURES);
+//			validResult = (++m_failureCount <= MAX_FAILURES);
 		}
         
         m_driveCommand  = driveCommand;

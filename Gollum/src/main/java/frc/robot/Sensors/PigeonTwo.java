@@ -18,6 +18,8 @@ public class PigeonTwo {
     //Pigeon instance (ensure it is a singleton)
     private static PigeonTwo instance = null;
 
+    //Pigeon Inverted Factor, 1.0 not inverted, -1.0 for inverted
+    private static final double m_headingInverted = -1.0;
     /**
      * Method to get current instance of Pigeon2 (or establish one if one does not exist)
      * @return Pigeon2 Instance
@@ -92,7 +94,7 @@ public class PigeonTwo {
     public Rotation2d getAngle(){
 //        double yaw = m_pigeon2.getYaw().refresh().getValueAsDouble();
 //        return Rotation2d.fromDegrees(yaw);
-        return Rotation2d.fromDegrees(-m_pigeon2.getAngle());
+        return Rotation2d.fromDegrees(m_pigeon2.getAngle()*m_headingInverted);
     }
 
     public Rotation2d getRoll(){
@@ -114,16 +116,16 @@ public class PigeonTwo {
     }
 
     public double getRawAngle(){
-        return m_pigeon2.getYaw().refresh().getValueAsDouble();
+        return (m_pigeon2.getYaw().refresh().getValueAsDouble()*m_headingInverted);
     }
 
     public double get360Angle(){
         //return m_pigeon2.getYaw().refresh().getValueAsDouble() % 360.0;
-        return -m_pigeon2.getAngle() % 360.0;
+        return (m_pigeon2.getAngle() % 360.0) * m_headingInverted;
     }
 
     public StatusCode setAngle(double degrees){
-        return m_pigeon2.setYaw(-degrees);
+        return m_pigeon2.setYaw(degrees*m_headingInverted);
     }
 
     public StatusCode reset(){

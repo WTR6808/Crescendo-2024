@@ -21,7 +21,8 @@ public class DriveToTarget extends Command {
   @Override
   public void initialize() {
     m_atTarget = false;
-    m_swerve.initDriveToTarget();
+//    m_swerve.initDriveToTarget();
+    m_swerve.InitDriveToSpeaker();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

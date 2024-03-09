@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class AutoDriveToSpeaker extends Command {
+public class AutoDriveToAmp extends Command {
   SwerveDriveSubsystem m_swerve = null;
   boolean m_atTarget = false;
-  /** Creates a new DriveToTarget. */
-  public AutoDriveToSpeaker(SwerveDriveSubsystem swerve) {
+  /** Creates a new AutoDriveToAmp. */
+  public AutoDriveToAmp(SwerveDriveSubsystem swerve) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_swerve = swerve;
     addRequirements((m_swerve));
@@ -21,8 +21,7 @@ public class AutoDriveToSpeaker extends Command {
   @Override
   public void initialize() {
     m_atTarget = false;
-//    m_swerve.initAutoDriveToTarget();
-    m_swerve.InitAutoDriveToSpeaker();
+    m_swerve.InitDriveToAmp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

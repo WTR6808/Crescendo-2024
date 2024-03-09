@@ -11,6 +11,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/DriveTrain": "Subsystem",
       "/SmartDashboard/Reset Encoders": "Command",
       "/SmartDashboard/Reset Gyro (Pigeon2)": "Command",
       "/SmartDashboard/Run Launcher Amp": "Command",
@@ -24,16 +25,17 @@
       "/SmartDashboard/Test Drive Distance (1.5 feet)": "Command",
       "/SmartDashboard/Test Drive to Auto Target": "Command",
       "/SmartDashboard/Test Drive to Target": "Command",
+      "/SmartDashboard/Test Lock Wheels ": "Command",
+      "/SmartDashboard/Test Lock and Launch ": "Command",
       "/SmartDashboard/Test Search for Amp": "Command",
       "/SmartDashboard/Test Strafe Distance (2 feet)": "Command"
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "Retained Values": {
-      "open": false
+    "transitory": {
+      "FMSInfo": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {
