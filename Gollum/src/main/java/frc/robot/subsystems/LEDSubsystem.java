@@ -98,16 +98,14 @@ public class LEDSubsystem extends SubsystemBase {
     public void setSectionColor(int pos1, int pos2, int red, int green, int blue, boolean writeToMainBufferBool) {
         Color m_color = new Color(red, green, blue);
         for (int i = pos1; i < pos2; i++) {
-            if (!writeToMainBufferBool)
-              m_ledBuffer.setLED(i, m_color);
+            if (writeToMainBufferBool) m_ledBuffer.setLED(i, m_color);
             else m_ledSecondBuffer.setLED(i, m_color);
         }
     }
     
     public void setSectionColor(int pos1, int pos2, Color m_color, boolean writeToMainBufferBool) {
         for (int i = pos1; i < pos2; i++) {
-            if (!writeToMainBufferBool)
-                m_ledBuffer.setLED(i, m_color);
+            if (writeToMainBufferBool) m_ledBuffer.setLED(i, m_color);
             else m_ledSecondBuffer.setLED(i, m_color);
         }
     }
