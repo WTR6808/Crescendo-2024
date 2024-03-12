@@ -40,7 +40,9 @@ public class LEDSubsystem extends SubsystemBase {
     private int start, end, stripeStart;
     private boolean m_isOff = false;
     // First color to be displayed on rainbow start
-    int m_rainbowFirstPixelHue = 0;
+    private int m_rainbowFirstPixelHue = 0;
+    
+    public boolean isExternalSubsystemOnlyControlEnabled = false;
 
     public static LEDSubsystem Instance() {
         if (m_instance == null) {
@@ -69,6 +71,21 @@ public class LEDSubsystem extends SubsystemBase {
         m_leds.setData(m_ledBuffer);
         // Turn on the LEDS
         m_leds.start();
+    }
+
+    // Disables all periodic stuff
+    public void takeExternalControl() {
+        isExternalSubsystemOnlyControlEnabled = true;
+    }
+
+    // Enables periodic stuff, dont recomend sending commands now
+    public void giveAwayExternalControl() {
+        isExternalSubsystemOnlyControlEnabled = false;
+    }
+
+    // Changes the base led update interval
+    public void ledsUpdateAt(int updateAtThisManyCycles) {
+        timeToHit = updateAtThisManyCycles;
     }
 
     public void setAllColors(int red, int green, int blue) {
@@ -249,6 +266,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
         m_isOff = true;
     }
+
     // Turn on leds!
     public void on() {
         m_isOff = false;
@@ -274,17 +292,21 @@ public class LEDSubsystem extends SubsystemBase {
             timer = 0;
         }
         else {timer++; return;}
-        // Updates the rainbow effect, remove to customize the leds
-        // rainbow();
-        setSectionColor(0, m_ledBuffer.getLength(), new Color(0,0,0), true);
+        
+        if (!isExternalSubsystemOnlyControlEnabled) {
+            // Updates the rainbow effect, remove to customize the leds
+            // rainbow();
+            setSectionColor(0, m_ledBuffer.getLength(), new Color(0,0,0), true);
 
-        stripe(0, 3, 5, false, 10, false, false);
-        // stripe(1, 3, 2, false, 10, false, false);
+            stripe(0, 3, 5, false, 10, false, false);
+            // stripe(1, 3, 2, false, 10, false, false);
 
-        // Does what it says :D
-        copySecondaryBufferToMain();
+            // Does what it says :D
+            copySecondaryBufferToMain();
 
-        // Should stay here unless periodic is completly unused. 
-        updateColors();
-    } 
+            // Should stay here unless periodic is completly unused. 
+            updateColors();
+        } 
+        else updateColors();
+    }
 }
