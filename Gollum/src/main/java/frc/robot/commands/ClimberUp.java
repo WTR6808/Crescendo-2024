@@ -35,6 +35,6 @@ public class ClimberUp extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_CC.getLeftEncoderPos()<-130;
+    return m_CC.getLeftEncoderPos()<5;
   }
 }

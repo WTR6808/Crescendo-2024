@@ -29,9 +29,9 @@ public class AutoResetPigeon2 extends InstantCommand {
   public void initialize() {
     //If we are the red alliance, initialize the angle to -90, +90 for blue
     if (FMSInfo.isRedAlliance()){
-      m_swerve.setPigeon2Angle(-90.0);
-    } else {
       m_swerve.setPigeon2Angle(90.0);
+    } else {
+      m_swerve.setPigeon2Angle(-90.0);
     } 
   }
 }

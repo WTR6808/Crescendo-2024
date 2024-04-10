@@ -186,7 +186,7 @@ public final class Constants {
     public static final double AMP_LAUNCH_D         =    0.0;
     public static final double AMP_LAUNCH_IZONE     =    0.0;
     public static final double AMP_FEEDFORWARD      =    0.00017;
-    public static final double AMP_VELOCITY         =    900.0;
+    public static final double AMP_VELOCITY         =    1000.0;
     //TODO find velocity constants for launcher
     
 

@@ -36,6 +36,6 @@ public class ClimberDown extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_CC.getLeftEncoderPos()>-5;
+    return m_CC.getLeftEncoderPos()>110;
   }
 }

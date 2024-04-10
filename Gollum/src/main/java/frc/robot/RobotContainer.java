@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Auto1;
+import frc.robot.commands.AutoNoNeedForStop;
 import frc.robot.commands.AutoDriveToSpeaker;
 import frc.robot.commands.AutoSearchForAmp_2;
 import frc.robot.commands.AutoStrafeDistance;
@@ -20,6 +21,7 @@ import frc.robot.subsystems.IT_IS_A_LAUNCHER;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -40,6 +42,8 @@ public class RobotContainer {
   IT_IS_A_LAUNCHER m_launcher = IT_IS_A_LAUNCHER.Instance();
   Candy_Cane m_Candy_Cane = Candy_Cane.Instance();
   LEDSubsystem m_leds = LEDSubsystem.Instance();
+
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   //private final CommandXboxController m_driverController =
@@ -138,6 +142,12 @@ public class RobotContainer {
     //go back to these routines.
     m_operatorController.povUp().onTrue(new ClimberUp(m_Candy_Cane));
     m_operatorController.povDown().onTrue(new ClimberDown(m_Candy_Cane));
+
+    m_chooser.setDefaultOption("AutoOne", new Auto1(m_swerve,m_launcher));
+    m_chooser.addOption("AutoTwo", new AutoNoNeedForStop(m_swerve,m_launcher));
+
+    SmartDashboard.putData(m_chooser);
+
   }
 
   /**
@@ -148,7 +158,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return Autos.exampleAuto(m_exampleSubsystem);
-    return new Auto1(m_swerve, m_launcher);
+    //return new Auto1(m_swerve, m_launcher);
+    return m_chooser.getSelected();
     //return null;
   }
 }

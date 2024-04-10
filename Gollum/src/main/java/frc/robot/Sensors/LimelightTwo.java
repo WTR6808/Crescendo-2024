@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.subsystems.LEDSubsystem;
 
 /** Add your docs here. */
 public class LimelightTwo {
@@ -43,8 +44,8 @@ public class LimelightTwo {
     private static final double TY_MAX            = 24.85;
     private static final double DRIVE_KP          =  2.75/TY_MAX;
     private static final double STEER_KP          =  2.75/TX_MAX;
-    private static final double X_TOLERANCE       =  0.5;//1.0;
-    private static final double Y_TOLERANCE       =  0.5;//1.0;
+    private static final double X_TOLERANCE       =  0.3;
+    private static final double Y_TOLERANCE       =  0.3;
     private static final int    MAX_TARGET_LOSSES = 20;
 
     private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-g");
@@ -144,6 +145,7 @@ public class LimelightTwo {
         //return target || (m_targetLosses <= MAX_TARGET_LOSSES);
         double defVal = 0.0; //Change to 1.0 for Simulation Debugging
         //if (distErr < 6.0) defVal = 0.0;
+        LEDSubsystem.Instance().lockedOn = tv.getDouble(defVal) == 1 ? true : false;
         return (tv.getDouble(defVal) > 0.0);
     }
   
@@ -220,6 +222,7 @@ public class LimelightTwo {
         m_trackingStarted = true;
         m_targetLosses = 0;
         //SmartDashboard.putBoolean("Red Alliance", IsRedAlliance.getBoolean(false));
+        LEDSubsystem.Instance().lockingOn = true;
     }
 
     public void InitializeAutonTracking(){
@@ -247,6 +250,7 @@ public class LimelightTwo {
         //Set back to Speaker pipeline
         setPipeline(Constants.Limelight_Constants.SPEAKER_PIPE);
         m_trackingStarted = false;
+        LEDSubsystem.Instance().lockingOn = false;
     }
 	
     public boolean atTarget(){

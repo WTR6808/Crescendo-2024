@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Sensors.FieldManagementSystem;
 
 public class LEDSubsystem extends SubsystemBase {
     private static LEDSubsystem m_instance = null;
@@ -26,8 +27,8 @@ public class LEDSubsystem extends SubsystemBase {
         {1, 17}, // Front Left
         {20, 32}, // Front Top
         {33, 48}, // Front Right
-        {49, 60}, // Front Bottom
-        {61, 73}, // Front Side Left, I know this one and the next are both 14
+        {49, 62}, // Front Bottom
+        {63, 73}, // Front Side Left, I know this one and the next are both 14
         {74, 89} // Front Side Right
     };
 
@@ -41,6 +42,14 @@ public class LEDSubsystem extends SubsystemBase {
     private boolean m_isOff = false;
     // First color to be displayed on rainbow start
     private int m_rainbowFirstPixelHue = 0;
+    public boolean intakeButtonOn = false;
+    public boolean launchOn = false;
+    public boolean doBlink = false;
+    public int doBlinkTimeToHit = 1;
+    public int doBLinkTimer = 0;
+    public boolean blinkOn = false;
+    public boolean lockingOn = false;
+    public boolean lockedOn = false;
     
     public boolean isExternalSubsystemOnlyControlEnabled = false;
 
@@ -65,7 +74,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
 
         // Turn on color IE. Purple
-        setAllColors(255, 0, 255);
+        // setAllColors(255, 0, 255);
 
         // Set the buffer
         m_leds.setData(m_ledBuffer);
@@ -100,6 +109,14 @@ public class LEDSubsystem extends SubsystemBase {
             m_ledBuffer.setLED(i, m_color);
         }
     }
+    public void setAllColors(Color m_color, boolean writeToMainBufferBool) {
+        for (int i = 0; i < m_ledBuffer.getLength(); i++) {
+            if (writeToMainBufferBool) 
+                m_ledBuffer.setLED(i, m_color);
+            else
+                m_ledSecondBuffer.setLED(i, m_color);
+        }
+    }
 
     public void setIndividualColor(int pos, int red, int green, int blue, boolean useMainBuffer) {
         Color m_color = new Color(red, green, blue);
@@ -128,6 +145,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
     public void updateColors() {
+        copySecondaryBufferToMain();
         m_leds.setData(m_ledBuffer);
     }
     
@@ -170,6 +188,7 @@ public class LEDSubsystem extends SubsystemBase {
 
         // just zeroing the section to get rid of previous result
         setSectionColor(start, end, offColor, false);
+        setSectionColor(start, end, offColor, true);
 
         // Makes first part of stripe section
         // example where ledStart = 2
@@ -270,7 +289,7 @@ public class LEDSubsystem extends SubsystemBase {
     // Turn on leds!
     public void on() {
         m_isOff = false;
-        setAllColors(100, 100, 100);
+        //setAllColors(100, 100, 100);
         updateColors();
     }
     
@@ -284,6 +303,10 @@ public class LEDSubsystem extends SubsystemBase {
         }
     }
     
+    public void clearSecondaryBuffer() {
+        for (int i = 0; i < m_ledBuffer.getLength(); i++)
+            m_ledSecondBuffer.setLED(i, new Color(0,0,0));
+    }
     @Override
     public void periodic() {
 
@@ -296,16 +319,52 @@ public class LEDSubsystem extends SubsystemBase {
         if (!isExternalSubsystemOnlyControlEnabled) {
             // Updates the rainbow effect, remove to customize the leds
             // rainbow();
-            setSectionColor(0, m_ledBuffer.getLength(), new Color(0,0,0), true);
+            if (doBlink) {
+                if (doBLinkTimer >= doBlinkTimeToHit) {
+                    blinkOn = !blinkOn;
+                    doBLinkTimer = 0;
+                }
+                else doBLinkTimer++;
+                if (blinkOn & !lockingOn) {
+                    if (FieldManagementSystem.getInstance().isRedAlliance()) 
+                        setAllColors(0, 255, 0);
+                    else 
+                        setAllColors(0, 0, 255);
+                }
+                else setAllColors(0,0,0);
+            } else {
+                if (FieldManagementSystem.getInstance().isRedAlliance()) 
+                    setAllColors(0, 255, 0);
+                else 
+                    setAllColors(0, 0, 255);
+            }
+            if (lockingOn) {
+                if (lockedOn)
+                    setAllColors(255,0,0);
+                else 
+                    setAllColors(0,255,0);
+            }
+            // setSectionColor(0, m_ledBuffer.getLength(), new Color(0,0,0), true);
 
-            stripe(0, 3, 5, false, 10, false, false);
-            // stripe(1, 3, 2, false, 10, false, false);
+            // stripe(0, 3, 2, false, 2, false, false);
+            // stripe(2, 3, 2, true, 2, false, false);
+            // stripe(4, 3, 2, false, 2, false, false);
+            // stripe(5, 3, 2, true, 2, false, false);
+
+
 
             // Does what it says :D
-            copySecondaryBufferToMain();
 
             // Should stay here unless periodic is completly unused. 
             updateColors();
+            if (intakeButtonOn) {
+                stripe(4, 3, 4, true, 0, false, false);
+                stripe(5, 3, 4, false, 0, false, false);            
+            }
+            if (launchOn) {
+                stripe(4, 3, 4, false, 0, false, false);
+                stripe(5, 3, 4, true, 0, true, false);
+            }
         } 
         else updateColors();
     }

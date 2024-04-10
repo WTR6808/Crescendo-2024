@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -90,6 +91,7 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_leftPidController.setIZone(Constants.launcherConstants.SPEAKER_LAUNCH_IZONE);
     m_leftPidController.setFF(Constants.launcherConstants.SPEAKER_FEEDFORWARD); 
     m_leftPidController.setReference(Constants.launcherConstants.SPEAKER_VELOCITY, CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().launchOn = true;
   }
 
   public void launchAmp(){
@@ -106,6 +108,7 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_leftPidController.setIZone(Constants.launcherConstants.AMP_LAUNCH_IZONE);
     m_leftPidController.setFF(Constants.launcherConstants.AMP_FEEDFORWARD);
     m_leftPidController.setReference(Constants.launcherConstants.AMP_VELOCITY, CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().launchOn = true;
   }
 
   public void reverseLauncher(){
@@ -122,6 +125,7 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_leftPidController.setIZone(Constants.launcherConstants.AMP_LAUNCH_IZONE);
     m_leftPidController.setFF(Constants.launcherConstants.AMP_FEEDFORWARD);
     m_leftPidController.setReference(Constants.launcherConstants.AMP_VELOCITY * -1, CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().intakeButtonOn = true;
   }
 
   public void stopLauncher(){
@@ -129,6 +133,9 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
     m_rightLaunchMotor.set(0);
     m_rightPidController.setReference(0, CANSparkMax.ControlType.kVelocity);
     m_leftPidController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().clearSecondaryBuffer();
+    LEDSubsystem.Instance().intakeButtonOn = false;
+    LEDSubsystem.Instance().launchOn = false;
   }
 
 

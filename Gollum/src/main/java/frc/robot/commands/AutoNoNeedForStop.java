@@ -12,21 +12,21 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Auto1 extends SequentialCommandGroup {
+public class AutoNoNeedForStop extends SequentialCommandGroup {
   /** Creates a new Auto1. */
-  public Auto1(SwerveDriveSubsystem Swerve, IT_IS_A_LAUNCHER Launcher) {
+  public AutoNoNeedForStop(SwerveDriveSubsystem Swerve, IT_IS_A_LAUNCHER Launcher) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoDriveToSpeaker(Swerve).withTimeout(4.0), 
+      new AutoDriveToSpeaker(Swerve).withTimeout(3.0), 
       new LaunchSpeaker(Launcher),
       new WaitCommand(1.3), 
       //new AutoTurnAngle(Swerve, 45.0), //May not need this once we change how we switch targets
       new AutoSearchForAmp_2(Swerve),
       new DriveToTarget(Swerve),
-      new DriveDistance(Swerve,50.0).withTimeout(3.0), 
-      new AutoResetPigeon2(Swerve), 
-      new AutoStrafeDistance(Swerve,60.0)
+      new DriveDistance(Swerve,54.0).withTimeout(3.0), 
+      new AutoResetPigeon2(Swerve)
+      //This is the best Auton Humans have ever seen, sourse trust me.
     );
   }
 }
