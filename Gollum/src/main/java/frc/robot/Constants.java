@@ -178,15 +178,15 @@ public final class Constants {
     public static final double SPEAKER_LAUNCH_I     =    0.0;
     public static final double SPEAKER_LAUNCH_D     =    0.0;
     public static final double SPEAKER_LAUNCH_IZONE =    0.0;
-    public static final double SPEAKER_FEEDFORWARD  =    0.00017; //0.00125/4.0;
-    public static final double SPEAKER_VELOCITY     =    5800.0; //5500;
+    public static final double SPEAKER_FEEDFORWARD  =    0.00068;//0.00017; //0.00125/4.0;
+    public static final double SPEAKER_VELOCITY     = 5300.0;//5800.0; //5500;
 
     public static final double AMP_LAUNCH_P         =    0.0001;
     public static final double AMP_LAUNCH_I         =    0.0;
     public static final double AMP_LAUNCH_D         =    0.0;
     public static final double AMP_LAUNCH_IZONE     =    0.0;
-    public static final double AMP_FEEDFORWARD      =    0.00017;
-    public static final double AMP_VELOCITY         =    1000.0;
+    public static final double AMP_FEEDFORWARD      =    0.00020;// 0.00017;
+    public static final double AMP_VELOCITY         =  400.0;//1000.0;
     //TODO find velocity constants for launcher
     
 
