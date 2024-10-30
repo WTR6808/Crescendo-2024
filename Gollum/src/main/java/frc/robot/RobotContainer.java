@@ -14,6 +14,7 @@ import frc.robot.commands.ClimberUp;
 import frc.robot.commands.ClimberDown;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.Launch;
 import frc.robot.commands.LaunchAmp;
 import frc.robot.commands.LaunchSpeaker;
 import frc.robot.subsystems.Candy_Cane;
@@ -119,8 +120,11 @@ public class RobotContainer {
     //*****************Operator Controller Button Assignments**********************
     //Make sure you're pulling a public routine, always double check, I'm looking at you Molly, and I'm judging you : )
     //Left and Right Bumpers launch a note into the Amp or Speaker respectively
-    m_operatorController.leftBumper().onTrue(new LaunchAmp(m_launcher));
-    m_operatorController.rightBumper().onTrue(new LaunchSpeaker(m_launcher));
+    m_operatorController.leftBumper().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_AMP_SPEED));
+    m_operatorController.rightBumper().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_SPK_SPEED));
+    //TODO choose a button for MAX SPEED LAUNCH and repeat above command for that button
+    //m_operatorController.XXXXXBUTON().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_MAX_SPEED);
+
     //m_operatorController.leftBumper().whileFalse(new InstantCommand(()->m_launcher.stopLauncher(), m_launcher));
 
     //B when pressed runs the launcher in reverse to receive a Note from the Source and stops when released

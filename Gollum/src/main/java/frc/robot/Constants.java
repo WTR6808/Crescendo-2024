@@ -165,6 +165,38 @@ public final class Constants {
     public static final double LAUNCHER_REDUCTION = 1.0;
     public static final double LAUNCH_VELOCITY_CONVERSION = (Measurements.WHEEL_DIAMETER * Math.PI * LAUNCHER_REDUCTION)/60.0;
   
+    public static class launcherSpeedConstants{
+      public double P;
+      public double I;
+      public double D;
+      public double IZONE;
+      public double FEEDFORWARD;
+      public double VELOCITY;
+      public double TOLERANCE;
+      //Constructor
+      launcherSpeedConstants (double p, double i, double d, double izone,
+                              double ff, double vel, double tol)
+      {
+        P = p; I=i; D=d; IZONE = izone; 
+        FEEDFORWARD = ff; VELOCITY=vel; TOLERANCE=tol;
+      }
+    }
+
+    public static final launcherSpeedConstants LAUNCH_MAX = 
+            new launcherSpeedConstants(0.0001, 0.0, 0.0, 0.0,
+                             0.00068, 5300.0, 150.0);
+    public static final launcherSpeedConstants LAUNCH_SPEAKER = 
+            new launcherSpeedConstants(0.0001, 0.0, 0.0, 0.0,
+                             0.00045, 1500.0, 150.0); //TODO Need to figure out FF
+    public static final launcherSpeedConstants LAUNCH_AMP = 
+            new launcherSpeedConstants(0.0001, 0.0, 0.0, 0.0,
+                             0.00020, 400.0, 50.0);
+    public static final launcherSpeedConstants [] LAUNCH_SPEEDS = {LAUNCH_MAX,LAUNCH_SPEAKER,LAUNCH_AMP};
+
+    public static final int LAUNCH_MAX_SPEED = 0;
+    public static final int LAUNCH_SPK_SPEED = 1;
+    public static final int LAUNCH_AMP_SPEED = 2;
+
     //CANID's for launcher motors
     public static final int LEFT_LAUNCH_CANID         = 61;
     public static final int RIGHT_LAUNCH_CANID        = 62;
@@ -201,8 +233,8 @@ public final class Constants {
     public static final double AMP_VELOCITY_TOLERANCE  = 100.0;
     public static final double SPEAKER_VELOCITY_TOLERANCE = 150.0;
     public static final int FLIP_VWOOP_TIME        = 60;
-  }
 
+  }
   public static class Limelight_Constants {
     public static final int DEFAULT_PIPELINE   = 0;
     public static final int SPEAKER_PIPELINE_B = 1;

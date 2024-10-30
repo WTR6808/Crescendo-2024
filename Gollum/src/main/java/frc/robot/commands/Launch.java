@@ -8,14 +8,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IT_IS_A_LAUNCHER;
 
-public class LaunchSpeaker extends Command {
-  
+public class Launch extends Command {
+
   IT_IS_A_LAUNCHER m_launcher;
   private int m_timer;
-
-  /** Creates a new LaunchSpeaker. */
-  public LaunchSpeaker(IT_IS_A_LAUNCHER launcher) {
+  private int m_speed;
+  /** Creates a new LaunchAmp. */
+  public Launch(IT_IS_A_LAUNCHER launcher, int speed) {
     m_launcher = launcher;
+    m_speed = speed;
     addRequirements(m_launcher);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,13 +25,14 @@ public class LaunchSpeaker extends Command {
   @Override
   public void initialize() {
     m_timer = 0;
-    m_launcher.launchSpeaker();
+    m_launcher.launchAtTarget(m_speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Math.abs(m_launcher.getVelocity()-Constants.launcherConstants.SPEAKER_VELOCITY) <= Constants.launcherConstants.SPEAKER_VELOCITY_TOLERANCE && m_timer<=0){
+    if(Math.abs(m_launcher.getVelocity()-Constants.launcherConstants.LAUNCH_SPEEDS[m_speed].VELOCITY) <= 
+       Constants.launcherConstants.LAUNCH_SPEEDS[m_speed].VELOCITY && m_timer<=0){
       m_launcher.flipperUp();
       m_timer = 1;
     }
@@ -49,14 +51,6 @@ public class LaunchSpeaker extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_timer > Constants.launcherConstants.FLIP_VWOOP_TIME);
-//    if(m_timer > Constants.launcherConstants.FLIP_VWOOP_TIME){
-//      m_launcher.flipperDown();
-//      m_launcher.stopLauncher();
-//      return true;
-//    } 
-//    else{
-//      return false;
-//    }
-  }
+     return (m_timer > Constants.launcherConstants.FLIP_VWOOP_TIME);
+  } 
 }

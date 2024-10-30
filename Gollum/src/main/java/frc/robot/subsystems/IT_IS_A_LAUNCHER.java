@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -75,6 +74,40 @@ public class IT_IS_A_LAUNCHER extends SubsystemBase {
   public void resetEncoders(){
     m_leftLaunchEncoder.setPosition(0);
     m_rightLaunchEncoder.setPosition(0);
+  }
+
+  public void launchAtTarget(int setting){
+    m_rightPidController.setP(Constants.launcherConstants.LAUNCH_SPEEDS[setting].P);
+    m_rightPidController.setI(Constants.launcherConstants.LAUNCH_SPEEDS[setting].I);
+    m_rightPidController.setD(Constants.launcherConstants.LAUNCH_SPEEDS[setting].D);
+    m_rightPidController.setIZone(Constants.launcherConstants.LAUNCH_SPEEDS[setting].IZONE);
+    m_rightPidController.setFF(Constants.launcherConstants.LAUNCH_SPEEDS[setting].FEEDFORWARD);
+    m_rightPidController.setReference(Constants.launcherConstants.LAUNCH_SPEEDS[setting].VELOCITY,CANSparkMax.ControlType.kVelocity);
+
+    m_leftPidController.setP(Constants.launcherConstants.LAUNCH_SPEEDS[setting].P);
+    m_leftPidController.setI(Constants.launcherConstants.LAUNCH_SPEEDS[setting].I);
+    m_leftPidController.setD(Constants.launcherConstants.LAUNCH_SPEEDS[setting].D);
+    m_leftPidController.setIZone(Constants.launcherConstants.LAUNCH_SPEEDS[setting].IZONE);
+    m_leftPidController.setFF(Constants.launcherConstants.LAUNCH_SPEEDS[setting].FEEDFORWARD);
+    m_leftPidController.setReference(Constants.launcherConstants.LAUNCH_SPEEDS[setting].VELOCITY,CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().launchOn = true;
+  }
+
+  public void launch(int setting){
+    m_rightPidController.setP(Constants.launcherConstants.SPEAKER_LAUNCH_P);
+    m_rightPidController.setI(Constants.launcherConstants.SPEAKER_LAUNCH_I);
+    m_rightPidController.setD(Constants.launcherConstants.SPEAKER_LAUNCH_D);
+    m_rightPidController.setIZone(Constants.launcherConstants.SPEAKER_LAUNCH_IZONE);
+    m_rightPidController.setFF(Constants.launcherConstants.SPEAKER_FEEDFORWARD);
+    m_rightPidController.setReference(Constants.launcherConstants.SPEAKER_VELOCITY,CANSparkMax.ControlType.kVelocity);
+
+    m_leftPidController.setP(Constants.launcherConstants.SPEAKER_LAUNCH_P);
+    m_leftPidController.setI(Constants.launcherConstants.SPEAKER_LAUNCH_I);
+    m_leftPidController.setD(Constants.launcherConstants.SPEAKER_LAUNCH_D);
+    m_leftPidController.setIZone(Constants.launcherConstants.SPEAKER_LAUNCH_IZONE);
+    m_leftPidController.setFF(Constants.launcherConstants.SPEAKER_FEEDFORWARD); 
+    m_leftPidController.setReference(Constants.launcherConstants.SPEAKER_VELOCITY, CANSparkMax.ControlType.kVelocity);
+    LEDSubsystem.Instance().launchOn = true;
   }
 
   public void launchSpeaker(){
