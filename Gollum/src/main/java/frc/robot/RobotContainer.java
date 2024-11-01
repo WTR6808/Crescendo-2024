@@ -122,6 +122,7 @@ public class RobotContainer {
     //Left and Right Bumpers launch a note into the Amp or Speaker respectively
     m_operatorController.leftBumper().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_AMP_SPEED));
     m_operatorController.rightBumper().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_SPK_SPEED));
+    m_operatorController.rightTrigger().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_MAX_SPEED));
     //TODO choose a button for MAX SPEED LAUNCH and repeat above command for that button
     //m_operatorController.XXXXXBUTON().onTrue(new Launch(m_launcher, Constants.launcherConstants.LAUNCH_MAX_SPEED);
 

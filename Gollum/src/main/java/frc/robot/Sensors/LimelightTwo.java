@@ -42,7 +42,7 @@ public class LimelightTwo {
 */
     private static final double TX_MAX            = 29.80;
     private static final double TY_MAX            = 24.85;
-    private static final double DRIVE_KP          =  2.75/TY_MAX;
+    private static final double DRIVE_KP          =  3.25/TY_MAX;//2.75/TY_MAX;
     private static final double STEER_KP          =  2.75/TX_MAX;
     private static final double X_TOLERANCE       =  0.3;
     private static final double Y_TOLERANCE       =  0.3;
@@ -58,7 +58,7 @@ public class LimelightTwo {
     private NetworkTableEntry priorityTid = table.getEntry("priorityid"); //April tag to be tracked 
 
     private static final double MAX_DRIVE         =  0.90;
-	private static final double MIN_DRIVE         =  0.40;
+	private static final double MIN_DRIVE         =  0.45;//0.40;
 	private static final double MAX_STEER         =  0.60;
 	private static final double MIN_STEER         =  0.40;
 
